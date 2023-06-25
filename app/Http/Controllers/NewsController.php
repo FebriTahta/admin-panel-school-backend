@@ -79,8 +79,8 @@ class NewsController extends Controller
                 if ($request->id !== null) {
                     # code...
                     $datas = News::find($request->id);
-                    $image_path1 = public_path("news_image\\".$datas->payment_image);
-                    $image_path2 = public_path("image_news\\".$datas->payment_image);
+                    $image_path1 = public_path("news_image\\".$datas->news_image);
+                    $image_path2 = public_path("image_news\\".$datas->news_image);
                     unlink($image_path1);
                     unlink($image_path2);
                 }

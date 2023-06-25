@@ -91,6 +91,7 @@
   <script src="{{asset('assets/js/plugins/chartjs.min.js')}}"></script>
   <script src="{{asset('assets/js/soft-ui-dashboard.min.js')}}"></script>
   @yield('script')
+
   <script>
     var win = navigator.platform.indexOf('Win') > -1;
     if (win && document.querySelector('#sidenav-scrollbar')) {
@@ -99,6 +100,15 @@
       }
       Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
     }
+
+    $('.fitur-off').on('click', function() {
+      swal({
+          title: "Maaf!",
+          text:  "Fitur ini belum dapat digunakan",
+          type: "error",
+          timer: 2000,
+      });
+    });
   </script>
   <!-- Github buttons -->
   <script async defer src="https://buttons.github.io/buttons.js"></script>

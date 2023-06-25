@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ApiController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,4 +17,19 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
+});
+
+Route::controller(ApiController::class)->group(function(){
+    // home
+    Route::get('hot-news','hot_news');
+    Route::get('recent-news','recent_news');
+    Route::get('preview-jurusan','preview_jurusan');
+    Route::get('preview-guru','preview_guru');
+
+    // page
+    Route::get('daftar-guru','daftar_guru');
+    Route::get('daftar-berita','daftar_berita');
+    Route::get('daftar-kategori','daftar_kategori');
+    Route::get('berita-populer','berita_populer');
+    Route::get('baca-berita/{news_slug}','baca_berita');
 });

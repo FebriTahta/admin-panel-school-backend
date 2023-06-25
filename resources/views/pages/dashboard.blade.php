@@ -19,10 +19,10 @@
                 <div class="row">
                   <div class="col-8">
                     <div class="numbers">
-                      <p class="text-sm mb-0 text-capitalize font-weight-bold">Revenue Today's</p>
+                      <p class="text-sm mb-0 text-capitalize font-weight-bold">Jurusan</p>
                       <h5 class="font-weight-bolder mb-0">
-                        $53,000
-                        <span class="text-success text-sm font-weight-bolder">+55%</span>
+                        {{$jurusan}}
+                        {{-- <span class="text-success text-sm font-weight-bolder">+55%</span> --}}
                       </h5>
                     </div>
                   </div>
@@ -41,10 +41,10 @@
                 <div class="row">
                   <div class="col-8">
                     <div class="numbers">
-                      <p class="text-sm mb-0 text-capitalize font-weight-bold">Today's Register</p>
+                      <p class="text-sm mb-0 text-capitalize font-weight-bold">Total Visitor</p>
                       <h5 class="font-weight-bolder mb-0">
-                        2,300
-                        <span class="text-success text-sm font-weight-bolder">+3%</span>
+                        -
+                        {{-- <span class="text-success text-sm font-weight-bolder">+3%</span> --}}
                       </h5>
                     </div>
                   </div>
@@ -63,10 +63,10 @@
                 <div class="row">
                   <div class="col-8">
                     <div class="numbers">
-                      <p class="text-sm mb-0 text-capitalize font-weight-bold">New User</p>
+                      <p class="text-sm mb-0 text-capitalize font-weight-bold">Berita</p>
                       <h5 class="font-weight-bolder mb-0">
-                        +3,462
-                        <span class="text-danger text-sm font-weight-bolder">-2%</span>
+                        {{$berita}}
+                        {{-- <span class="text-danger text-sm font-weight-bolder">-2%</span> --}}
                       </h5>
                     </div>
                   </div>
@@ -85,16 +85,16 @@
                 <div class="row">
                   <div class="col-8">
                     <div class="numbers">
-                      <p class="text-sm mb-0 text-capitalize font-weight-bold">Whole Revenue</p>
+                      <p class="text-sm mb-0 text-capitalize font-weight-bold">Total Guru</p>
                       <h5 class="font-weight-bolder mb-0">
-                        $103,430
-                        <span class="text-success text-sm font-weight-bolder">+5%</span>
+                        {{$guru}}
+                        {{-- <span class="text-success text-sm font-weight-bolder">+5%</span> --}}
                       </h5>
                     </div>
                   </div>
                   <div class="col-4 text-end">
                     <div class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">
-                      <i class="ni ni-cart text-lg opacity-10" aria-hidden="true"></i>
+                      <i class="fa fa-graduation-cap text-lg opacity-10" aria-hidden="true"></i>
                     </div>
                   </div>
                 </div>
@@ -111,8 +111,8 @@
                     <canvas id="chart-bars" class="chart-canvas" height="170"></canvas>
                   </div>
                 </div>
-                <h6 class="ms-2 mt-4 mb-0"> Peserta PPDB </h6>
-                <p class="text-sm ms-2"> (<span class="font-weight-bolder">+23%</span>) than last week </p>
+                <h6 class="ms-2 mt-4 mb-0"> Tingkat Ketepatan Pembayaran </h6>
+                <p class="text-sm ms-2" style="color: red"> (<span class="font-weight-bolder">--</span>) fitur ini belum dapat digunakan </p>
                 <div class="container border-radius-lg">
                   <div class="row">
                     <div class="col-4 py-4 ps-0">
@@ -132,7 +132,7 @@
                             </g>
                           </svg>
                         </div>
-                        <p class="text-xs mt-1 mb-0 font-weight-bold">Users</p>
+                        <p class="text-xs mt-1 mb-0 font-weight-bold">Wajib Bayar</p>
                       </div>
                       <h4 class="font-weight-bolder">36K</h4>
                       <div class="progress w-75">
@@ -158,7 +158,7 @@
                             </g>
                           </svg>
                         </div>
-                        <p class="text-xs mt-1 mb-0 font-weight-bold">User Paid</p>
+                        <p class="text-xs mt-1 mb-0 font-weight-bold">Semestinya</p>
                       </div>
                       <h4 class="font-weight-bolder">2m</h4>
                       <div class="progress w-75">
@@ -197,10 +197,10 @@
           <div class="col-lg-7">
             <div class="card z-index-2">
               <div class="card-header pb-0">
-                <h6>Sales overview</h6>
+                <h6>Grafik Pengunjung Situs</h6>
                 <p class="text-sm">
                   <i class="fa fa-arrow-up text-success"></i>
-                  <span class="font-weight-bold">4% more</span> in 2021
+                  <span class="font-weight-bold">- sekarang</span> di {{now()}}
                 </p>
               </div>
               <div class="card-body p-3">
@@ -216,11 +216,11 @@
             <div class="card">
               <div class="card-header pb-0">
                 <div class="row">
-                  <div class="col-lg-6 col-7">
-                    <h6>Peserta Pendaftaran PPDB Online</h6>
+                  <div class="col-lg-6 col-7" style="color: red">
+                    <h6>Data Pembayaran</h6>
                     <p class="text-sm mb-0">
                       <i class="fa fa-check text-info" aria-hidden="true"></i>
-                      <span class="font-weight-bold ms-1">30 </span> new user
+                      <span class="font-weight-bold ms-1" >-- </span> Fitur laporan pembayaran belum dapat digunakan
                     </p>
                   </div>
                   <div class="col-lg-6 col-5 my-auto text-end">
@@ -256,7 +256,7 @@
                               <img src="../assets/img/small-logos/logo-slack.svg" class="avatar avatar-sm me-3" alt="team7">
                             </div>
                             <div class="d-flex flex-column justify-content-center">
-                              <h6 class="mb-0 text-sm">Daftar Ulang Online</h6>
+                              <h6 class="mb-0 text-sm">Contoh Pembayaran 1</h6>
                             </div>
                           </div>
                         </td>
@@ -294,7 +294,7 @@
                               <img src="../assets/img/small-logos/logo-jira.svg" class="avatar avatar-sm me-3" alt="jira">
                             </div>
                             <div class="d-flex flex-column justify-content-center">
-                              <h6 class="mb-0 text-sm">Pendaftaran Peserta Didik Baru</h6>
+                              <h6 class="mb-0 text-sm">Contoh Pembayaran 2</h6>
                             </div>
                           </div>
                         </td>
@@ -331,10 +331,10 @@
           <div class="col-lg-4 col-md-6">
             <div class="card h-100">
               <div class="card-header pb-0">
-                <h6>Orders overview</h6>
-                <p class="text-sm">
+                <h6>Payment overview</h6>
+                <p class="text-sm"  style="color: red">
                   <i class="fa fa-arrow-up text-success" aria-hidden="true"></i>
-                  <span class="font-weight-bold">24%</span> this month
+                  <span class="font-weight-bold">--</span> track pembayaran belum dapat digunakan
                 </p>
               </div>
               <div class="card-body p-3">
@@ -344,7 +344,7 @@
                       <i class="ni ni-bell-55 text-success text-gradient"></i>
                     </span>
                     <div class="timeline-content">
-                      <h6 class="text-dark text-sm font-weight-bold mb-0">$2400, Design changes</h6>
+                      <h6 class="text-dark text-sm font-weight-bold mb-0">$2400, Contoh Pembayaran</h6>
                       <p class="text-secondary font-weight-bold text-xs mt-1 mb-0">22 DEC 7:20 PM</p>
                     </div>
                   </div>
@@ -354,7 +354,7 @@
                       <i class="ni ni-credit-card text-warning text-gradient"></i>
                     </span>
                     <div class="timeline-content">
-                      <h6 class="text-dark text-sm font-weight-bold mb-0">New card added for order #4395133</h6>
+                      <h6 class="text-dark text-sm font-weight-bold mb-0">Contoh Pembayaran #4395133</h6>
                       <p class="text-secondary font-weight-bold text-xs mt-1 mb-0">20 DEC 2:20 AM</p>
                     </div>
                   </div>
@@ -365,6 +365,8 @@
           </div>
         </div>
       </div>
+
+      {{-- <iframe src="https://img.youtube.com/vi/BhMpIz3ljwg/1.jpg" frameborder="0"></iframe> --}}
 @endsection
 
 @section('script')

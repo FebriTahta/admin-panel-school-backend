@@ -11,7 +11,7 @@
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
         <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">Pages</a></li>
-        <li class="breadcrumb-item text-sm text-dark active" aria-current="page">News</li>
+        <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Jurusan</li>
     </ol>
     <h6 class="font-weight-bolder mb-0">Create</h6>
 </nav>
@@ -22,7 +22,7 @@
     <div class="row my-4">
         <div class="col-lg-12 col-md-12 mb-md-0 mb-4">
           <div class="col-md-12 mt-4">
-            <a href="/admin-daftar-berita" class="btn btn-xs btn-warning">Kembali</a>
+            <a href="/admin-daftar-jurusan" class="btn btn-xs btn-warning">Kembali</a>
         </div>
           <div class="card">
             <div class="card-header pb-0">
@@ -41,70 +41,41 @@
                     <div class="row" style="padding: 20px">
                         @if ($status == 'edit')
                             <div class="form-group">
-                                <label for="banner_berita">BANNER BERITA</label>
-                                <input type="hidden" name="id" value="{{$berita->id}}">
-                                <input type="file" name="news_image" class="form-control" accept="image/*" id="inputGroupFile01" onchange="showPreview(event);">
+                                <label for="banner_jurusan">BANNER JURUSAN</label>
+                                <input type="hidden" name="id" value="{{$jurusan->id}}">
+                                <input type="file" name="jurusan_image" class="form-control" accept="image/*" id="inputGroupFile01" onchange="showPreview(event);">
                                 <div class="preview" style="max-width: 100%; margin-top: 20px">
                                     <small style="font-size: 12px; display: none" class="text-danger" id="text-preview">*Preview Banner</small>
-                                    <img style="max-width: 300px" id="inputGroupFile01-preview" src="{{asset('image_news/'.$berita->news_image)}}">
+                                    <img style="max-width: 300px" id="inputGroupFile01-preview" src="{{asset('image_jurusan/'.$jurusan->jurusan_image)}}">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="judul_berita">JUDUL BERITA</label>
-                                <input type="text" value="{{$berita->news_title}}" class="form-control" name="news_title" placeholder="......" required>
+                                <label for="judul_berita">JUDUL JURUSAN</label>
+                                <input type="text" value="{{$jurusan->jurusan_name}}" class="form-control" name="jurusan_name" placeholder="......" required>
                             </div>
                             <div class="form-group">
-                                <label for="kategori_berita">KATEGORI BERITA</label>
-                                @if (count($kategori) < 1)
-                                    <br><label class="text-danger">Belum ada kategori berita yang terdaftar, silahkan tambahkan kategori terlebih dahulu</label>
-                                @else
-                                    <br>
-                                    @foreach ($kategori as $key=> $item_kategori)
-                                        <input type="checkbox" name="kategori_id[]" 
-                                        value="{{$item_kategori->id}}" 
-                                        @if($berita->kategori->contains('id',$item_kategori->id))
-                                        checked
-                                        @endif
-                                        >
-                                        <label for="nama_kategori">{{$item_kategori->kategori_name}}</label>
-                                    @endforeach
-                                @endif
-                            </div>
-                            <div class="form-group">
-                                <label for="deskripsi_kategori">DESKRIPSI BERITA</label>
-                                <textarea name="news_desc" id="summernote" cols="30" rows="10" required>{!!$berita->news_desc!!}</textarea>
+                                <label for="deskripsi_kategori">DESKRIPSI JURUSAN</label>
+                                <textarea name="jurusan_desc" id="summernote" cols="30" rows="10" required>{!!$jurusan->jurusan_desc!!}</textarea>
                             </div>
                             <div class="form-group">
                                 <input type="submit" class="btn btn-sm btn-primary" id="btn_edit" value="SUBMIT">
                             </div>
                         @else
                             <div class="form-group">
-                                <label for="banner_berita">BANNER BERITA</label>
-                                <input type="file" name="news_image" class="form-control" accept="image/*" id="inputGroupFile01" onchange="showPreview(event);" required>
+                                <label for="banner_jurusan">BANNER JURUSAN</label>
+                                <input type="file" name="jurusan_image" class="form-control" accept="image/*" id="inputGroupFile01" onchange="showPreview(event);" required>
                                 <div class="preview" style="max-width: 100%; margin-top: 20px">
                                     <small style="font-size: 12px" class="text-danger" id="text-preview">*Preview Banner</small>
                                     <img style="max-width: 300px" id="inputGroupFile01-preview" src="">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="judul_berita">JUDUL BERITA</label>
-                                <input type="text" class="form-control" name="news_title" placeholder="......" required>
+                                <label for="judul_jurusan">NAMA JURUSAN</label>
+                                <input type="text" class="form-control" name="jurusan_name" placeholder="......" required>
                             </div>
                             <div class="form-group">
-                                <label for="kategori_berita">KATEGORI BERITA</label>
-                                @if (count($kategori) < 1)
-                                    <br><label class="text-danger">Belum ada kategori berita yang terdaftar, silahkan tambahkan kategori terlebih dahulu</label>
-                                @else
-                                    <br>
-                                    @foreach ($kategori as $item_kategori)
-                                        <input type="checkbox" name="kategori_id[]" value="{{$item_kategori->id}}">
-                                        <label for="nama_kategori">{{$item_kategori->kategori_name}}</label>
-                                    @endforeach
-                                @endif
-                            </div>
-                            <div class="form-group">
-                                <label for="deskripsi_kategori">DESKRIPSI BERITA</label>
-                                <textarea name="news_desc" id="summernote" cols="30" rows="10" required></textarea>
+                                <label for="deskripsi_jurusan">DESKRIPSI JURUSAN</label>
+                                <textarea name="jurusan_desc" id="summernote" cols="30" rows="10" required></textarea>
                             </div>
                             <div class="form-group">
                                 <input type="submit" class="btn btn-sm btn-primary" id="btn_edit" value="SUBMIT">
@@ -155,7 +126,7 @@
             var formData = new FormData(this);
             $.ajax({
                 type: 'POST',
-                url: "/new-berita",
+                url: "/new-jurusan",
                 data: formData,
                 cache: false,
                 contentType: false,
@@ -177,7 +148,7 @@
                             timer: 2000,
                         }).then(okay => {
                             if (okay) {
-                                window.location.href = "/admin-daftar-berita";
+                                window.location.href = "/admin-daftar-jurusan";
                             }
                         });
                     } else {

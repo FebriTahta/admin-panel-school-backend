@@ -4,7 +4,7 @@
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
         <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">Pages</a></li>
-        <li class="breadcrumb-item text-sm text-dark active" aria-current="page">News</li>
+        <li class="breadcrumb-item text-sm text-dark active" aria-current="page">guru</li>
     </ol>
     <h6 class="font-weight-bolder mb-0">List</h6>
 </nav>
@@ -15,16 +15,16 @@
     <div class="row my-4">
         <div class="col-lg-12 col-md-12 mb-md-0 mb-4">
           <div class="col-md-12 mt-4">
-            <a href="/admin-create-berita" class="btn btn-xs btn-primary">New Berita</a>
+            <a href="/admin-create-guru" class="btn btn-xs btn-primary">New guru</a>
         </div>
           <div class="card">
             <div class="card-header pb-0">
               <div class="row">
                 <div class="col-lg-6 col-7">
-                  <h6>Berita</h6>
+                  <h6>guru</h6>
                   <p class="text-sm mb-0">
                     <i class="fa fa-check text-info" aria-hidden="true"></i>
-                    <span class="font-weight-bold ms-1">---</span>  Daftar Berita
+                    <span class="font-weight-bold ms-1">---</span>  Daftar guru
                   </p>
                 </div>
               </div>
@@ -34,26 +34,27 @@
                 <table class="table align-items-center mb-0">
                   <thead>
                     <tr>
-                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Judul Berita</th>
-                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Kategori</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nama guru</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Jabatan guru</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Whatsapp guru</th>
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Opsi</th>
                     </tr>
                   </thead>
                   <tbody>
-                    @foreach ($berita as $item)
+                    @foreach ($guru as $item)
                     <tr>
                         <td>
                             <div class="d-flex px-2 py-1">
                                 <div>
-                                    <img src="{{asset('image_news/'.$item->news_image)}}" class="avatar avatar-sm me-3" alt="team7">
+                                    <img src="{{asset('image_guru/'.$item->guru_image)}}" class="avatar avatar-sm me-3" alt="team7">
                                 </div>
                                 <div class="d-flex flex-column justify-content-center">
-                                    <a href="/admin-edit-berita/{{$item->id}}" >
+                                    <a href="/admin-edit-guru/{{$item->id}}" >
                                         <h6 class="mb-0 text-sm">
-                                            @if (strlen($item->news_title) > 30)
-                                                {{substr($item->news_title,0,30)}} ...
+                                            @if (strlen($item->guru_name) > 30)
+                                                {{substr($item->guru_name,0,30)}} ...
                                             @else
-                                                {{$item->news_title}}
+                                                {{$item->guru_name}}
                                             @endif
                                         </h6>
                                     </a>
@@ -61,15 +62,18 @@
                             </div>
                         </td>
                         <td>
-                            @foreach ($item->kategori as $item_kategori)
                             <span class="text-xs font-weight-bold">
-                                {{$item_kategori->kategori_name}}
+                                {{$item->guru_jabatan}}
                             </span>
-                            @endforeach
                         </td>
-                            <td class="align-middle text-center text-sm">
+                        <td>
+                            <span class="text-xs font-weight-bold">
+                                {{$item->guru_wa}}
+                            </span>
+                        </td>
+                        <td class="align-middle text-center text-sm">
                             <a href="#x" class="text-xs font-weight-bold text-danger" data-toggle="modal" data-target="#modal-delete" id="btn-dell" 
-                            onclick="hapus('{{$item->id}}','{{$item->news_title}}')"
+                            onclick="hapus('{{$item->id}}','{{$item->guru_name}}')"
                             > Hapus </a>
                         </td>
                     </tr>
@@ -80,11 +84,36 @@
             </div>
           </div>
           <div class="pagination" style="margin-top: 20px">
-            {{$berita->links('pagination::bootstrap-4')}}
+            {{$guru->links('pagination::bootstrap-4')}}
           </div>
         </div>
       </div>
  </div>
+
+ <div class="modal fade" id="modal-edit" role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header bg-primary">
+          <button type="button" class="close bg-transparent text-white" style="border: none" data-dismiss="modal">&times;</button>
+          <h5 class="modal-title text-white">DATA KATEGORI</h5>
+        </div>
+        <form id="form_edit">@csrf
+            <div class="modal-body">
+                <div class="form-group row">
+                    <div class="col-md-12 col-12">
+                        <input type="hidden" name="id" id="edit_id">
+                        <input type="text" class="form-control text-capitalize" id="kategori_name" name="kategori_name" placeholder="NAMA KATEGORI" required>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <input type="submit" id="btn_edit" class="btn btn-sm btn-primary" value="SUBMIT">
+            </div>
+        </form>
+      </div>
+    </div>
+  </div>
 
   <div class="modal fade" id="modal-delete" role="dialog">
     <div class="modal-dialog">
@@ -97,9 +126,9 @@
         <form id="form_dell">@csrf
             <div class="modal-body">
                 <div class="form-group">
-                    <label for="mainmenu_name">Nama Berita</label>
-                    <input type="hidden" id="delete_kategori_id" name="id" required>
-                    <input type="text" readonly id="delete_kategori_name" name="news_title" class="form-control" placeholder="..." required>
+                    <label for="mainmenu_name">Nama guru</label>
+                    <input type="hidden" id="delete_guru_id" name="id" required>
+                    <input type="text" readonly id="delete_guru_name" name="guru_name" class="form-control" placeholder="..." required>
                 </div>
             </div>
             <div class="modal-footer">
@@ -115,10 +144,10 @@
 @section('script')
 <script>
 
-    function hapus(id,kategori_name) {
-        $('#delete_kategori_id').val(id);
-        $('#delete_kategori_name').val(kategori_name);
-        console.log(id +'-'+ kategori_name);
+    function hapus(id,guru_name) {
+        $('#delete_guru_id').val(id);
+        $('#delete_guru_name').val(guru_name);
+        console.log(id +'-'+ guru_name);
     }
 
     $('#form_dell').submit(function(e) {
@@ -126,7 +155,7 @@
         var formData = new FormData(this);
         $.ajax({
             type: 'POST',
-            url: "/remove-berita",
+            url: "/remove-guru",
             data: formData,
             cache: false,
             contentType: false,
@@ -148,7 +177,7 @@
                         timer: 2000,
                     }).then(okay => {
                         if (okay) {
-                            window.location.href = "/admin-daftar-berita";
+                            window.location.href = "/admin-daftar-guru";
                         }
                     });
                 } else {
@@ -167,7 +196,5 @@
             }
         });
     });
-
-    
 </script>
 @endsection

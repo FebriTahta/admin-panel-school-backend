@@ -6,6 +6,8 @@ use App\Http\Controllers\PaymenttypeController;
 use App\Http\Controllers\Transaksi1Controller;
 use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\NewsController;
+use App\Http\Controllers\JurusanController;
+use App\Http\Controllers\GuruController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -36,6 +38,22 @@ Route::group(['middleware' => ['auth', 'CheckRole:admin,super_admin']], function
     Route::controller(Transaksi1Controller::class)->group(function(){
         Route::post('/transaksi1','transaksi1');
         Route::get('/payment-transaksi1/{transaksi1_uuid}','payment_transaksi1');
+    });
+
+    Route::controller(JurusanController::class)->group(function(){
+        Route::get('/admin-daftar-jurusan','admin_daftar_jurusan');
+        Route::get('/admin-create-jurusan','admin_create_jurusan');
+        Route::post('/new-jurusan','new_jurusan');
+        Route::get('/admin-edit-jurusan/{id}','admin_edit_jurusan');
+        Route::post('/remove-jurusan','remove_jurusan');
+    });
+
+    Route::controller(GuruController::class)->group(function(){
+        Route::get('/admin-daftar-guru','admin_daftar_guru');
+        Route::get('/admin-create-guru','admin_create_guru');
+        Route::get('/admin-edit-guru/{id}','admin_edit_guru');
+        Route::post('/new-guru','new_guru');
+        Route::post('/remove-guru','remove_guru');
     });
 
     Route::controller(KategoriController::class)->group(function(){
