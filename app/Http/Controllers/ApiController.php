@@ -5,6 +5,7 @@ use App\Models\News;
 use App\Models\Kategori;
 use App\Models\Jurusan;
 use App\Models\Guru;
+use App\Models\Banner;
 use App\Helpers\ApiFormatter;
 use Illuminate\Http\Request;
 
@@ -124,6 +125,34 @@ class ApiController extends Controller
             'news_view' => $data->news_view + 1
         ]);
 
+        if ($data) {
+            # code...
+            return ApiFormatter::createApi(200, 'success' ,$data);
+        }else {
+            # code...
+            return ApiFormatter::createApi(400, 'failed');
+        }
+
+    }
+
+    public function daftar_berita_berdasarkan_kategori($kategori_slug)
+    {
+        $data = News::whereHas('kategori',function($query) use ($kategori_slug){
+            $query->where('kategori_slug',$kategori_slug);
+        })->with('kategori')->paginate(10);
+
+        if ($data) {
+            # code...
+            return ApiFormatter::createApi(200, 'success' ,$data);
+        }else {
+            # code...
+            return ApiFormatter::createApi(400, 'failed');
+        }
+    }
+
+    public function display_banner()
+    {
+        $data = Banner::get();
         if ($data) {
             # code...
             return ApiFormatter::createApi(200, 'success' ,$data);

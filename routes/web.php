@@ -8,6 +8,8 @@ use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\JurusanController;
 use App\Http\Controllers\GuruController;
+use App\Http\Controllers\BannerController;
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -93,5 +95,17 @@ Route::group(['middleware' => ['auth', 'CheckRole:admin,super_admin']], function
         Route::post('/store-menu-type','store_menu_type');
     });
 
+    Route::controller(BannerController::class)->group(function(){
+        Route::get('/admin-banner','admin_banner');
+        Route::get('/admin-create-banner','admin_create_banner');
+        Route::get('/admin-edit-banner/{id}','admin_edit_banner');
+        Route::post('/new-banner','new_banner');
+        Route::post('/remove-banner','remove_banner');
+    });
+
+    Route::controller(ProfileController::class)->group(function(){
+        Route::get('/admin-profile','admin_profile');
+        Route::post('/submit-profile','submit_profile');
+    });
 });
 

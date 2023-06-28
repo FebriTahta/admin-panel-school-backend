@@ -27,9 +27,13 @@ Route::controller(ApiController::class)->group(function(){
     Route::get('preview-guru','preview_guru');
 
     // page
+    Route::get('display-banner','display_banner');
+
     Route::get('daftar-guru','daftar_guru');
     Route::get('daftar-berita','daftar_berita');
     Route::get('daftar-kategori','daftar_kategori');
     Route::get('berita-populer','berita_populer');
     Route::get('baca-berita/{news_slug}','baca_berita');
+    Route::get('daftar-berita-berdasarkan-kategori/{kategori_slug}','daftar_berita_berdasarkan_kategori');
+
 });
