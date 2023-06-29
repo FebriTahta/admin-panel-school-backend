@@ -4,7 +4,7 @@
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
         <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">Pages</a></li>
-        <li class="breadcrumb-item text-sm text-dark active" aria-current="page">News</li>
+        <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Kesiswaan</li>
     </ol>
     <h6 class="font-weight-bolder mb-0">List</h6>
 </nav>
@@ -15,16 +15,16 @@
     <div class="row my-4">
         <div class="col-lg-12 col-md-12 mb-md-0 mb-4">
           <div class="col-md-12 mt-4">
-            <a href="/admin-create-berita" class="btn btn-xs btn-primary">New Berita</a>
+            <a href="/admin-create-kesiswaan" class="btn btn-xs btn-primary">New Konten Kesiswaan</a>
         </div>
           <div class="card">
             <div class="card-header pb-0">
               <div class="row">
                 <div class="col-lg-6 col-7">
-                  <h6>Berita</h6>
+                  <h6>Kesiswaan</h6>
                   <p class="text-sm mb-0">
                     <i class="fa fa-check text-info" aria-hidden="true"></i>
-                    <span class="font-weight-bold ms-1">---</span>  Daftar Berita
+                    <span class="font-weight-bold ms-1">---</span>  Daftar Kesiswaan
                   </p>
                 </div>
               </div>
@@ -34,26 +34,27 @@
                 <table class="table align-items-center mb-0">
                   <thead>
                     <tr>
-                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Judul Berita</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Judul Konten</th>
                       <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Kategori</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Dokumen</th>
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Opsi</th>
                     </tr>
                   </thead>
                   <tbody>
-                    @foreach ($berita as $item)
+                    @foreach ($kesiswaan as $item)
                     <tr>
                         <td>
                             <div class="d-flex px-2 py-1">
                                 <div>
-                                    <img src="{{asset('image_news/'.$item->news_image)}}" class="avatar avatar-sm me-3" alt="team7">
+                                    <img src="{{asset('image_kesiswaan/'.$item->kesiswaan_image)}}" class="avatar avatar-sm me-3" alt="team7">
                                 </div>
                                 <div class="d-flex flex-column justify-content-center">
-                                    <a href="/admin-edit-berita/{{$item->id}}" >
+                                    <a href="/admin-edit-kesiswaan/{{$item->id}}" >
                                         <h6 class="mb-0 text-sm">
-                                            @if (strlen($item->news_title) > 30)
-                                                {{substr($item->news_title,0,30)}} ...
+                                            @if (strlen($item->kesiswaan_title) > 30)
+                                                {{substr($item->kesiswaan_title,0,30)}} ...
                                             @else
-                                                {{$item->news_title}}
+                                                {{$item->kesiswaan_title}}
                                             @endif
                                         </h6>
                                     </a>
@@ -67,9 +68,12 @@
                             </span>
                             @endforeach
                         </td>
-                            <td class="align-middle text-center text-sm">
+                        <td class="text-xs font-weight-bold">
+                          {{$item->dokumen_count}} - Dokumen
+                        </td>
+                        <td class="align-middle text-center text-sm">
                             <a href="#x" class="text-xs font-weight-bold text-danger" data-toggle="modal" data-target="#modal-delete" id="btn-dell" 
-                            onclick="hapus('{{$item->id}}','{{$item->news_title}}')"
+                            onclick="hapus('{{$item->id}}','{{$item->kesiswaan_title}}')"
                             > Hapus </a>
                         </td>
                     </tr>
@@ -80,7 +84,7 @@
             </div>
           </div>
           <div class="pagination" style="margin-top: 20px">
-            {{$berita->links('pagination::bootstrap-4')}}
+            {{$kesiswaan->links('pagination::bootstrap-4')}}
           </div>
         </div>
       </div>
@@ -97,9 +101,9 @@
         <form id="form_dell">@csrf
             <div class="modal-body">
                 <div class="form-group">
-                    <label for="mainmenu_name">Nama Berita</label>
+                    <label for="mainmenu_name">Nama Konten Kesiswaan</label>
                     <input type="hidden" id="delete_kategori_id" name="id" required>
-                    <input type="text" readonly id="delete_kategori_name" name="news_title" class="form-control" placeholder="..." required>
+                    <input type="text" readonly id="delete_kategori_name" name="kesiswaan_title" class="form-control" placeholder="..." required>
                 </div>
             </div>
             <div class="modal-footer">
@@ -126,7 +130,7 @@
         var formData = new FormData(this);
         $.ajax({
             type: 'POST',
-            url: "/remove-berita",
+            url: "/remove-kesiswaan",
             data: formData,
             cache: false,
             contentType: false,
@@ -148,7 +152,7 @@
                         timer: 2000,
                     }).then(okay => {
                         if (okay) {
-                            window.location.href = "/admin-daftar-berita";
+                            window.location.href = "/admin-kesiswaan";
                         }
                     });
                 } else {

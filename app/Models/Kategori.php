@@ -17,4 +17,9 @@ class Kategori extends Model
     {
         return $this->belongsToMany(News::class);
     }
+
+    public function kesiswaan()
+    {
+        return $this->belongsToMany(Kesiswaan::class);
+    }
 }
