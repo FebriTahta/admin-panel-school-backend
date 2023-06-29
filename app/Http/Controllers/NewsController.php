@@ -37,12 +37,12 @@ class NewsController extends Controller
         $data = News::find($request->id);
         $image_path1 = public_path("news_image\\".$data->news_image);
         $image_path2 = public_path("image_news\\".$data->news_image);
-        if (File::exist($image_path1)) {
+        if (File::exists($image_path1)) {
             # code...
             unlink($image_path1);
         }
 
-        if (File::exist($image_path2)) {
+        if (File::exists($image_path2)) {
             # code...
             unlink($image_path2);
         }
@@ -88,12 +88,12 @@ class NewsController extends Controller
                     $datas = News::find($request->id);
                     $image_path1 = public_path("news_image\\".$datas->news_image);
                     $image_path2 = public_path("image_news\\".$datas->news_image);
-                    if (File::exist($image_path1)) {
+                    if (File::exists($image_path1)) {
                         # code...
                         unlink($image_path1);
                     }
-            
-                    if (File::exist($image_path2)) {
+
+                    if (File::exists($image_path2)) {
                         # code...
                         unlink($image_path2);
                     }

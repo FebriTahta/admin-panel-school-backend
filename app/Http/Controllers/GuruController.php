@@ -58,11 +58,12 @@ class GuruController extends Controller
                     $datas = Guru::find($request->id);
                     $image_path1 = public_path('guru_image/'.$datas->guru_image);
                     $image_path2 = public_path('image_guru/'.$datas->guru_image);
-                    if (File::exist($image_path1)) {
+                    if (File::exists($image_path1)) {
                         # code...
                         unlink($image_path1);
                     }
-                    if (File::exist($image_path2)) {
+
+                    if (File::exists($image_path2)) {
                         # code...
                         unlink($image_path2);
                     }
