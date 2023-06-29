@@ -53,8 +53,15 @@ class ProfileController extends Controller
                     $datas = Profile::find($request->id);
                     $image_path1 = public_path("profile_image\\".$datas->profile_image);
                     $image_path2 = public_path("image_profile\\".$datas->profile_image);
-                    unlink($image_path1);
-                    unlink($image_path2);
+                    if (File::exist($image_path1)) {
+                        # code...
+                        unlink($image_path1);
+                    }
+            
+                    if (File::exist($image_path2)) {
+                        # code...
+                        unlink($image_path2);
+                    }
                 }
     
                 $filename    = time().'.'.$request->profile_image->getClientOriginalExtension();

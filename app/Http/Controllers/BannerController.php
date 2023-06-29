@@ -57,8 +57,15 @@ class BannerController extends Controller
                     $datas = Banner::find($request->id);
                     $image_path1 = public_path("banner_image\\".$datas->banner_image);
                     $image_path2 = public_path("image_banner\\".$datas->banner_image);
-                    unlink($image_path1);
-                    unlink($image_path2);
+                    if (File::exist($image_path1)) {
+                        # code...
+                        unlink($image_path1);
+                    }
+
+                    if (File::exist($image_path2)) {
+                        # code...
+                        unlink($image_path2);
+                    }
                 }
 
                 $filename    = time().'.'.$request->banner_image->getClientOriginalExtension();
@@ -102,8 +109,15 @@ class BannerController extends Controller
         $data = Banner::find($request->id);
         $image_path1 = public_path("banner_image\\".$data->banner_image);
         $image_path2 = public_path("image_banner\\".$data->banner_image);
-        unlink($image_path1);
-        unlink($image_path2);
+        if (File::exist($image_path1)) {
+            # code...
+            unlink($image_path1);
+        }
+
+        if (File::exist($image_path2)) {
+            # code...
+            unlink($image_path2);
+        }
         $data->delete();
         # code...
         return response()->json(

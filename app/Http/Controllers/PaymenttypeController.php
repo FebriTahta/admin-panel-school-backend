@@ -30,8 +30,15 @@ class PaymenttypeController extends Controller
         $data = Paymenttype::find($request->id);
         $image_path1 = public_path("pmnt_image\\".$data->payment_image);
         $image_path2 = public_path("image_pmnt\\".$data->payment_image);
-        unlink($image_path1);
-        unlink($image_path2);
+        if (File::exist($image_path1)) {
+            # code...
+            unlink($image_path1);
+        }
+
+        if (File::exist($image_path2)) {
+            # code...
+            unlink($image_path2);
+        }
         $data->delete();
         # code...
         return response()->json(
@@ -90,8 +97,15 @@ class PaymenttypeController extends Controller
                     $datas = Paymenttype::find($request->id);
                     $image_path1 = public_path("pmnt_image\\".$datas->payment_image);
                     $image_path2 = public_path("image_pmnt\\".$datas->payment_image);
-                    unlink($image_path1);
-                    unlink($image_path2);
+                    if (File::exist($image_path1)) {
+                        # code...
+                        unlink($image_path1);
+                    }
+            
+                    if (File::exist($image_path2)) {
+                        # code...
+                        unlink($image_path2);
+                    }
                 }
 
                 $filename    = time().'.'.$request->payment_image->getClientOriginalExtension();

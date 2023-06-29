@@ -52,8 +52,15 @@ class JurusanController extends Controller
                     $datas = Jurusan::find($request->id);
                     $image_path1 = public_path("jurusan_image\\".$datas->jurusan_image);
                     $image_path2 = public_path("image_jurusan\\".$datas->jurusan_image);
-                    unlink($image_path1);
-                    unlink($image_path2);
+                    if (File::exist($image_path1)) {
+                        # code...
+                        unlink($image_path1);
+                    }
+            
+                    if (File::exist($image_path2)) {
+                        # code...
+                        unlink($image_path2);
+                    }
                 }
 
                 $filename    = time().'.'.$request->jurusan_image->getClientOriginalExtension();
@@ -109,8 +116,15 @@ class JurusanController extends Controller
         $data = Jurusan::find($request->id);
         $image_path1 = public_path("jurusan_image\\".$data->jurusan_image);
         $image_path2 = public_path("image_jurusan\\".$data->jurusan_image);
-        unlink($image_path1);
-        unlink($image_path2);
+        if (File::exist($image_path1)) {
+            # code...
+            unlink($image_path1);
+        }
+
+        if (File::exist($image_path2)) {
+            # code...
+            unlink($image_path2);
+        }
         $data->delete();
         # code...
         return response()->json(

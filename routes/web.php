@@ -9,6 +9,7 @@ use App\Http\Controllers\NewsController;
 use App\Http\Controllers\JurusanController;
 use App\Http\Controllers\GuruController;
 use App\Http\Controllers\BannerController;
+use App\Http\Controllers\KesiswaanController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -106,6 +107,14 @@ Route::group(['middleware' => ['auth', 'CheckRole:admin,super_admin']], function
     Route::controller(ProfileController::class)->group(function(){
         Route::get('/admin-profile','admin_profile');
         Route::post('/submit-profile','submit_profile');
+    });
+
+    Route::controller(KesiswaanController::class)->group(function(){
+        Route::get('/admin-kesiswaan','admin_kesiswaan');
+        Route::get('/admin-edit-kesiswaan/{id}','admin_edit_kesiswaan');
+        Route::get('/admin-create-kesiswaan','admin_create_kesiswaan');
+        Route::post('/new-kesiswaan','new_kesiswaan');
+        Route::post('/remove-kesiswaan','remove_kesiswaan');
     });
 });
 

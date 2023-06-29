@@ -37,8 +37,15 @@ class NewsController extends Controller
         $data = News::find($request->id);
         $image_path1 = public_path("news_image\\".$data->news_image);
         $image_path2 = public_path("image_news\\".$data->news_image);
-        unlink($image_path1);
-        unlink($image_path2);
+        if (File::exist($image_path1)) {
+            # code...
+            unlink($image_path1);
+        }
+
+        if (File::exist($image_path2)) {
+            # code...
+            unlink($image_path2);
+        }
         if (count($data->kategori) > 0) {
             # code...
             $data->kategori->detach();
@@ -81,8 +88,15 @@ class NewsController extends Controller
                     $datas = News::find($request->id);
                     $image_path1 = public_path("news_image\\".$datas->news_image);
                     $image_path2 = public_path("image_news\\".$datas->news_image);
-                    unlink($image_path1);
-                    unlink($image_path2);
+                    if (File::exist($image_path1)) {
+                        # code...
+                        unlink($image_path1);
+                    }
+            
+                    if (File::exist($image_path2)) {
+                        # code...
+                        unlink($image_path2);
+                    }
                 }
 
                 $filename    = time().'.'.$request->news_image->getClientOriginalExtension();
