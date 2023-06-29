@@ -53,6 +53,16 @@
                                 <label for="judul_berita">JUDUL JURUSAN</label>
                                 <input type="text" value="{{$jurusan->jurusan_name}}" class="form-control" name="jurusan_name" placeholder="......" required>
                             </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label for="">TOTAL KELAS</label>
+                                    <input type="number" class="form-control" value="{{$jurusan->jurusan_kelas}}" name="jurusan_kelas" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="">TOTAL ANAK</label>
+                                    <input type="number" class="form-control" name="jurusan_anak" value="{{$jurusan->jurusan_anak}}" required>
+                                </div>
+                            </div>
                             <div class="form-group">
                                 <label for="deskripsi_kategori">DESKRIPSI JURUSAN</label>
                                 <textarea name="jurusan_desc" id="summernote" cols="30" rows="10" required>{!!$jurusan->jurusan_desc!!}</textarea>
@@ -72,6 +82,16 @@
                             <div class="form-group">
                                 <label for="judul_jurusan">NAMA JURUSAN</label>
                                 <input type="text" class="form-control" name="jurusan_name" placeholder="......" required>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label for="">TOTAL KELAS</label>
+                                    <input type="number" class="form-control" name="jurusan_kelas" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="">TOTAL ANAK</label>
+                                    <input type="number" class="form-control" name="jurusan_anak" required>
+                                </div>
                             </div>
                             <div class="form-group">
                                 <label for="deskripsi_jurusan">DESKRIPSI JURUSAN</label>

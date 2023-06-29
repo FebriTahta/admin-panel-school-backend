@@ -10,6 +10,6 @@ class Jurusan extends Model
     use HasFactory;
 
     protected $fillable= [
-        'jurusan_name','jurusan_slug','jurusan_image','jurusan_desc'  
+        'jurusan_name','jurusan_slug','jurusan_image','jurusan_desc','jurusan_anak','jurusan_kelas'
     ];
 }

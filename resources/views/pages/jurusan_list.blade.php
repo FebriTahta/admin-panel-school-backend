@@ -35,6 +35,7 @@
                   <thead>
                     <tr>
                       <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nama Jurusan</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Keterangan</th>
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Opsi</th>
                     </tr>
                   </thead>
@@ -58,6 +59,10 @@
                                     </a>
                                 </div>
                             </div>
+                        </td>
+                        <td class="align-middle text-center text-sm">
+                            <a  class="text-xs font-weight-bold text-secondary" 
+                            >{{$item->jurusan_anak.' anak & '.$item->jurusan_kelas.' kelas'}}</a>
                         </td>
                         <td class="align-middle text-center text-sm">
                             <a href="#x" class="text-xs font-weight-bold text-danger" data-toggle="modal" data-target="#modal-delete" id="btn-dell" 

@@ -35,6 +35,8 @@ class JurusanController extends Controller
         $validator = Validator::make($request->all(), [
             'jurusan_name'  => 'required|max:100',
             'jurusan_desc'  => 'required|',
+            'jurusan_anak'  => 'required|',
+            'jurusan_kelas'  => 'required|',
             // 'news_image'    => 'required|',
         ]);
 
@@ -70,6 +72,8 @@ class JurusanController extends Controller
                         'jurusan_name'        => $request->jurusan_name,
                         'jurusan_slug'         => Str::slug($request->jurusan_name),
                         'jurusan_desc'         => $request->jurusan_desc,
+                        'jurusan_anak'         => $request->jurusan_anak,
+                        'jurusan_kelas'         => $request->jurusan_kelas,
                         'jurusan_image'        => $filename,
                     ]
                 );
@@ -83,6 +87,8 @@ class JurusanController extends Controller
                         'jurusan_name'        => $request->jurusan_name,
                         'jurusan_slug'         => Str::slug($request->jurusan_name),
                         'jurusan_desc'         => $request->jurusan_desc,
+                        'jurusan_anak'         => $request->jurusan_anak,
+                        'jurusan_kelas'         => $request->jurusan_kelas,
                     ]
                 );
             }

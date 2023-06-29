@@ -5,7 +5,9 @@ use App\Models\News;
 use App\Models\Kategori;
 use App\Models\Jurusan;
 use App\Models\Guru;
+use App\Models\Profile;
 use App\Models\Banner;
+use DB;
 use App\Helpers\ApiFormatter;
 use Illuminate\Http\Request;
 
@@ -69,7 +71,6 @@ class ApiController extends Controller
         }  
     }
 
-    // page guru
     public function daftar_guru()
     {
         $data = Guru::all();
@@ -152,7 +153,7 @@ class ApiController extends Controller
 
     public function display_banner()
     {
-        $data = Banner::get();
+        $data = Banner::orderBy('id','desc')->get();
         if ($data) {
             # code...
             return ApiFormatter::createApi(200, 'success' ,$data);
@@ -160,6 +161,42 @@ class ApiController extends Controller
             # code...
             return ApiFormatter::createApi(400, 'failed');
         }
+    }
 
+    public function display_profile()
+    {
+        $data = Profile::first();
+        if ($data) {
+            # code...
+            return ApiFormatter::createApi(200, 'success' ,$data);
+        }else {
+            # code...
+            return ApiFormatter::createApi(400, 'failed');
+        }
+    }
+
+    public function daftar_jurusan()
+    {
+        $data = Jurusan::get();
+        if ($data) {
+            # code...
+            return ApiFormatter::createApi(200, 'success' ,$data);
+        }else {
+            # code...
+            return ApiFormatter::createApi(400, 'failed');
+        }
+    }
+
+    public function total_siswa()
+    {
+        $data = Jurusan::select(DB::raw("SUM(jurusan_anak) as total_anak"), 
+        DB::raw("COUNT(jurusan_kelas) as total_jurusan"),DB::raw("SUM(jurusan_kelas) as total_kelas"))->get();
+        if ($data) {
+            # code...
+            return ApiFormatter::createApi(200, 'success' ,$data);
+        }else {
+            # code...
+            return ApiFormatter::createApi(400, 'failed');
+        }
     }
 }
