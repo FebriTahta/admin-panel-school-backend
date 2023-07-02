@@ -74,6 +74,42 @@
                                 <label for="deskripsi_kategori">DESKRIPSI KESISWAAN</label>
                                 <textarea name="kesiswaan_desc" id="summernote" cols="30" rows="10" required>{!!$kesiswaan->kesiswaan_desc!!}</textarea>
                             </div>
+                            @if ($kesiswaan->dokumen)
+                                <div class="form-group">
+                                    @if (count($kesiswaan->dokumen) > 0)
+                                    <div class="div">
+                                        <small style="color: red; font-size: 12px">Hapus File ?</small>
+                                    </div>
+                                    @endif
+                                    <div class="row">
+                                        @foreach ($kesiswaan->dokumen as $item)
+                                            <div class="col-md-6 mb-3 col-9">
+                                                <input type="hidden" value="{{$kesiswaan->id}}" name="kesiswaan_id">
+                                                <input type="text" value="{{$item->dokumen_name}}" class="form-control" name="dokumen_name" placeholder="Nama File">
+                                            </div>
+                                            <div class="col-md-6 mb-3 col-3">
+                                                <button class="btn btn-danger" data-toggle="modal" data-target="#modal-delete" onclick="hapus_dokumen('{{$item->id}}','{{$item->dokumen_name}}','{{$kesiswaan->id}}')" type="button"><i class="fa fa-minus"></i></button>
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                </div>
+                            @endif
+                            <div class="form-group" id="dynamicAddRemove">
+                                <div class="div">
+                                    <small style="color: red; font-size: 12px">Menambahkan File Baru ?</small>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4 mb-3">
+                                        <input type="text" class="form-control" name="dokumen_name[]" placeholder="Nama File">
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <input type="file" class="form-control" name="dokumen_docs[]" placeholder="File">
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <button class="btn btn-primary" id="dynamic-ar" type="button"><i class="fa fa-plus"></i></button>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="form-group">
                                 <input type="submit" class="btn btn-sm btn-primary" id="btn_edit" value="SUBMIT">
                             </div>
@@ -133,6 +169,32 @@
         </div>
     </div>
 </div>
+
+<div class="modal fade" id="modal-delete" role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header bg-danger">
+          <button type="button" class="close bg-transparent text-white" style="border: none" data-dismiss="modal">&times;</button>
+          <h5 class="modal-title text-white">Remove</h5>
+        </div>
+        <form id="form_dell">@csrf
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="mainmenu_name">Nama Dokumen</label>
+                    <input type="hidden" id="delete_dokumen_id" name="id" required>
+                    <input type="hidden" id="kesiswaan_id" name="kesiswaan_id" required>
+                    <input type="text" readonly id="delete_dokumen_name" name="dokumen_name" class="form-control" placeholder="..." required>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <input type="submit" class="btn btn-danger" value="Delete" id="btndel">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </form>
+      </div>
+    </div>
+  </div>
 @endsection
 
 @section('script')
@@ -141,6 +203,13 @@
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
 
     <script>
+
+        function hapus_dokumen(id,dokumen_name,kesiswaan_id) {
+            $('#delete_dokumen_id').val(id);
+            $('#delete_dokumen_name').val(dokumen_name);
+            $('#kesiswaan_id').val(kesiswaan_id);
+        }
+
         function showPreview(event) {
             if (event.target.files.length > 0) {
                 var src = URL.createObjectURL(event.target.files[0]);
@@ -222,6 +291,53 @@
                     } else {
                         $('#btn_edit').val('SUBMIT!');
                         $('#btn_edit').attr('disabled', false);
+                        toastr.error(response.message);
+                        $('#errList').html("");
+                        $('#errList').addClass('alert alert-danger');
+                        $.each(response.errors, function(key, err_values) {
+                            $('#errList').append('<div>' + err_values + '</div>');
+                        });
+                    }
+                },
+                error: function(data) {
+                    console.log(data);
+                }
+            });
+        });
+
+        $('#form_dell').submit(function(e) {
+            e.preventDefault();
+            var formData = new FormData(this);
+            $.ajax({
+                type: 'POST',
+                url: "/remove-dokumen-kesiswaan",
+                data: formData,
+                cache: false,
+                contentType: false,
+                processData: false,
+                beforeSend: function() {
+                    $('#btndel').attr('disabled', 'disabled');
+                    $('#btndel').val('Process...');
+                },
+                success: function(response) {
+                    if (response.status == 200) {
+                        $("#form_dell")[0].reset();
+                        $('#btndel').val('Hapus');
+                        $('#btndel').attr('disabled', false);
+                        toastr.success(response.message);
+                        swal({
+                            title: "SUCCESS!",
+                            text: response.message,
+                            type: "success",
+                            timer: 2000,
+                        }).then(okay => {
+                            if (okay) {
+                                window.location.href = response.redirect;
+                            }
+                        });
+                    } else {
+                        $('#btndel').val('Hapus!');
+                        $('#btndel').attr('disabled', false);
                         toastr.error(response.message);
                         $('#errList').html("");
                         $('#errList').addClass('alert alert-danger');

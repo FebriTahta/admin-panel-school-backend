@@ -6,6 +6,7 @@ use App\Models\Kategori;
 use App\Models\Jurusan;
 use App\Models\Guru;
 use App\Models\Profile;
+use App\Models\Kesiswaan;
 use App\Models\Banner;
 use DB;
 use App\Helpers\ApiFormatter;
@@ -191,6 +192,58 @@ class ApiController extends Controller
     {
         $data = Jurusan::select(DB::raw("SUM(jurusan_anak) as total_anak"), 
         DB::raw("COUNT(jurusan_kelas) as total_jurusan"),DB::raw("SUM(jurusan_kelas) as total_kelas"))->get();
+        if ($data) {
+            # code...
+            return ApiFormatter::createApi(200, 'success' ,$data);
+        }else {
+            # code...
+            return ApiFormatter::createApi(400, 'failed');
+        }
+    }
+
+    public function preview_kesiswaan()
+    {
+        $data = Kesiswaan::with('kategori','dokumen')->orderBy('id','desc')->limit(3)->get();
+        if ($data) {
+            # code...
+            return ApiFormatter::createApi(200, 'success' ,$data);
+        }else {
+            # code...
+            return ApiFormatter::createApi(400, 'failed');
+        }
+    }
+
+    public function daftar_kesiswaan()
+    {
+        $data = $data = Kesiswaan::with('kategori','dokumen')->orderBy('id','desc')->paginate(6);
+        if ($data) {
+            # code...
+            return ApiFormatter::createApi(200, 'success' ,$data);
+        }else {
+            # code...
+            return ApiFormatter::createApi(400, 'failed');
+        }
+    }
+
+    public function daftar_kesiswaan_berdasarkan_kategori($kategori_slug)
+    {
+        $data = Kesiswaan::whereHas('kategori',function($query) use ($kategori_slug){
+            $query->where('kategori_slug',$kategori_slug);
+        })->with('kategori','dokumen')->paginate(10);
+
+        if ($data) {
+            # code...
+            return ApiFormatter::createApi(200, 'success' ,$data);
+        }else {
+            # code...
+            return ApiFormatter::createApi(400, 'failed');
+        }
+    }
+
+    public function detail_kesiswaan($kesiswaan_slug)
+    {
+        $data = Kesiswaan::where('kesiswaan_slug',$kesiswaan_slug)->with('kategori','dokumen')->first();
+
         if ($data) {
             # code...
             return ApiFormatter::createApi(200, 'success' ,$data);

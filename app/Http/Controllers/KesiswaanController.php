@@ -20,7 +20,10 @@ class KesiswaanController extends Controller
 
     public function admin_edit_kesiswaan($id)
     {
-
+        $kesiswaan = Kesiswaan::where('id',$id)->with('dokumen')->first();
+        $status = "edit";
+        $kategori = Kategori::get();
+        return view('pages.create_kesiswaan',compact('kesiswaan','status','kategori'));
     }
 
     public function admin_create_kesiswaan()
@@ -56,16 +59,18 @@ class KesiswaanController extends Controller
                 if ($request->id !== null) {
                     # code...
                     $datas = Kesiswaan::find($request->id);
-                    $image_path1 = public_path("kesiswaan_image\\".$datas->kesiswaan_image);
-                    $image_path2 = public_path("image_kesiswaan\\".$datas->kesiswaan_image);
-                    if (File::exists($image_path1)) {
+                    if ($datas->kesiswaan_image) {
                         # code...
-                        unlink($image_path1);
-                    }
-
-                    if (File::exists($image_path2)) {
-                        # code...
-                        unlink($image_path2);
+                        $image_path1 = public_path("kesiswaan_image\\".$datas->kesiswaan_image);
+                        $image_path2 = public_path("image_kesiswaan\\".$datas->kesiswaan_image);
+                        if (File::exists($image_path1)) {
+                            # code...
+                            unlink($image_path1);
+                        }
+                        if (File::exists($image_path2)) {
+                            # code...
+                            unlink($image_path2);
+                        }
                     }
                 }
 
@@ -139,11 +144,11 @@ class KesiswaanController extends Controller
                         # code...
                         $kategori_id    = $request->kategori_id;
                         $kategori       = Kategori::whereIn('id', $kategori_id)->get();
-                        $data->kategori()->sync($kategori);
+                        $data->kategori()->syncWithoutDetaching($kategori);
                     }
                 }
 
-                $files = [];
+                 $files = [];
                 $dokumenName = [];
                 $namaDokumen = [];
                 
@@ -152,6 +157,7 @@ class KesiswaanController extends Controller
                     {
                         $dokumenName = time().'.'.$file->getClientOriginalExtension();  
                         $file->move(public_path('uploads'), $dokumenName);
+                        $namaDokumen[] = $request->dokumen_name[$key];
                         $files[] = [
                             "dokumen_name" => $request->dokumen_name[$key],
                             "dokumen_slug" => Str::slug($request->dokumen_name[$key]),
@@ -161,15 +167,73 @@ class KesiswaanController extends Controller
                     
                     Dokumen::insert($files);
                     $docs = Dokumen::whereIn('dokumen_name',$namaDokumen)->get();
-                    $data->dokumen()->sync($docs);
+                    $data->dokumen()->syncWithoutDetaching($docs);
                 }
             }
-            return response()->json(['status'=>200,'message'=>$namaDokumen]);
+            return response()->json(['status'=>200,'message'=>'konten kesiswaan has been updated']);
         }
     }
     
-    public function remove_kesiswaan()
+    public function remove_kesiswaan(Request $request)
     {
+        $data = Kesiswaan::withCount('dokumen','kategori')->where('id', $request->id)->first();
+        $dokumen_id = [];
+        if ($data->dokumen_count > 0) {
+            # code...
+            foreach ($data->dokumen as $key => $value) {
+                # code...
+                $dokumen_id[] = $value->id;
+            }
+            // lepas relasi
+            $data->dokumen()->detach();
+            // hapus dokumen
+            Dokumen::whereIn('id',$dokumen_id)->delete();
+        }
 
+        if ($data->dokumen_count > 0) {
+            // lepas relasi
+            $data->kategori()->detach();
+        }
+
+        $image_path1 = public_path("kesiswaan_image\\".$data->kesiswaan_image);
+        $image_path2 = public_path("image_kesiswaan\\".$data->kesiswaan_image);
+        if (File::exists($image_path1)) {
+            # code...
+            unlink($image_path1);
+        }
+        if (File::exists($image_path2)) {
+            # code...
+            unlink($image_path2);
+        }
+
+        $data->delete();
+        return response()->json(
+            [
+                'status'        => 200,
+                'message'       => 'Dokumen kesiswaan Has Been Deleted',
+            ]
+        );
+        
+    }
+
+    public function remove_dokumen_kesiswaan(Request $request)
+    {
+        $data = Dokumen::find($request->id);
+        $image_path1 = public_path("uploads\\".$data->dokumen_docs);
+        if (File::exists($image_path1)) {
+            # code...
+            unlink($image_path1);
+        }
+
+        $data->kesiswaan()->detach();
+        $data->delete();
+        # code...
+        return response()->json(
+            [
+                'status'        => 200,
+                'message'       => 'Dokumen kesiswaan Has Been Deleted',
+                'redirect'      => '/admin-edit-kesiswaan'.'/'.$request->kesiswaan_id
+            ]
+        );
     }
 }

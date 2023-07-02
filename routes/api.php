@@ -28,6 +28,7 @@ Route::controller(ApiController::class)->group(function(){
     Route::get('display-banner','display_banner');
     Route::get('display-profile','display_profile');
     Route::get('total-siswa','total_siswa');
+    Route::get('preview-kesiswaan','preview_kesiswaan');
 
     // page
 
@@ -38,4 +39,7 @@ Route::controller(ApiController::class)->group(function(){
     Route::get('baca-berita/{news_slug}','baca_berita');
     Route::get('daftar-berita-berdasarkan-kategori/{kategori_slug}','daftar_berita_berdasarkan_kategori');
     Route::get('daftar-jurusan','daftar_jurusan');
+    Route::get('daftar-kesiswaan','daftar_kesiswaan');
+    Route::get('detail-kesiswaan/{kesiswaan_slug}','detail_kesiswaan');
+    Route::get('daftar-kesiswaan-berdasarkan-kategori/{kategori_slug}','daftar_kesiswaan_berdasarkan_kategori');
 });

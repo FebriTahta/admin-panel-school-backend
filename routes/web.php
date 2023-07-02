@@ -115,6 +115,7 @@ Route::group(['middleware' => ['auth', 'CheckRole:admin,super_admin']], function
         Route::get('/admin-create-kesiswaan','admin_create_kesiswaan');
         Route::post('/new-kesiswaan','new_kesiswaan');
         Route::post('/remove-kesiswaan','remove_kesiswaan');
+        Route::post('/remove-dokumen-kesiswaan','remove_dokumen_kesiswaan');
     });
 });
 
