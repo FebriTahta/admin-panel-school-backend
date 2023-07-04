@@ -86,8 +86,8 @@ class ApiController extends Controller
 
     public function daftar_berita()
     {
-        $data = News::orderBy('id','desc')->whereHas('kategori',function($q){
-            $q->where('kategori','!=','prestasi');
+        $data = News::orderBy('id','desc')->whereHas('kategori',function($query){
+            $query->where('kategori_slug','!=','prestasi');
         })->paginate(10);
         if ($data) {
             # code...
@@ -100,8 +100,8 @@ class ApiController extends Controller
 
     public function daftar_prestasi()
     {
-        $data = News::orderBy('id','desc')->whereHas('kategori',function($q){
-            $q->where('kategori','prestasi');
+        $data = News::orderBy('id','desc')->whereHas('kategori',function($query){
+            $query->where('kategori_slug', 'prestasi'); 
         })->paginate(10);
         if ($data) {
             # code...
