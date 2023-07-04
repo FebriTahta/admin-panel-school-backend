@@ -88,7 +88,7 @@ class ApiController extends Controller
     {
         $data = News::orderBy('id','desc')->whereHas('kategori',function($query){
             $query->where('kategori_slug','!=','prestasi');
-        })->paginate(10);
+        })->with('kategori')->paginate(10);
         if ($data) {
             # code...
             return ApiFormatter::createApi(200, 'success' ,$data);
@@ -102,7 +102,7 @@ class ApiController extends Controller
     {
         $data = News::orderBy('id','desc')->whereHas('kategori',function($query){
             $query->where('kategori_slug', 'prestasi'); 
-        })->paginate(10);
+        })->with('kategori')->paginate(10);
         if ($data) {
             # code...
             return ApiFormatter::createApi(200, 'success' ,$data);
