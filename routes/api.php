@@ -34,6 +34,7 @@ Route::controller(ApiController::class)->group(function(){
 
     Route::get('daftar-guru','daftar_guru');
     Route::get('daftar-berita','daftar_berita');
+    Route::get('daftar-prestasi','daftar_prestasi');
     Route::get('daftar-kategori','daftar_kategori');
     Route::get('berita-populer','berita_populer');
     Route::get('baca-berita/{news_slug}','baca_berita');

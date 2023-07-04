@@ -13,7 +13,9 @@ class NewsController extends Controller
 {
     public function admin_daftar_berita()
     {
-        $berita = News::with('kategori')->orderBy('id','desc')->paginate(10);
+        $berita = News::whereHas('kategori',function($q){
+            return $q->where('kategori_slug','!=','prestasi');
+        })->orderBy('id','desc')->paginate(10);
         return view('pages.news_list',compact('berita'));
     }
 
@@ -116,6 +118,7 @@ class NewsController extends Controller
                         'news_slug'         => Str::slug($request->news_title),
                         'news_desc'         => $request->news_desc,
                         'news_image'        => $filename,
+                        'news_view'         => 0,
                     ]
                 );
 
@@ -147,5 +150,20 @@ class NewsController extends Controller
             }
             return response()->json(['status'=>200,'message'=>'store success']);
         }
+    }
+
+    public function admin_prestasi()
+    {
+        $berita = News::whereHas('kategori', function($query){
+            $query->where('kategori_slug', 'prestasi');
+        })->with('kategori')->paginate(10);
+        return view('pages.prestasi_list',compact('berita'));
+    }
+
+    public function admin_create_prestasi()
+    {
+        $status = 'create';
+        $kategori = Kategori::where('kategori_slug','prestasi')->get();
+        return view('pages.create_prestasi',compact('status','kategori'));
     }
 }

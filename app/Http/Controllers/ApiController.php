@@ -86,7 +86,23 @@ class ApiController extends Controller
 
     public function daftar_berita()
     {
-        $data = News::orderBy('id','desc')->with('kategori')->paginate(10);
+        $data = News::orderBy('id','desc')->whereHas('kategori',function($q){
+            $q->where('kategori','!=','prestasi');
+        })->paginate(10);
+        if ($data) {
+            # code...
+            return ApiFormatter::createApi(200, 'success' ,$data);
+        }else {
+            # code...
+            return ApiFormatter::createApi(400, 'failed');
+        }
+    }
+
+    public function daftar_prestasi()
+    {
+        $data = News::orderBy('id','desc')->whereHas('kategori',function($q){
+            $q->where('kategori','prestasi');
+        })->paginate(10);
         if ($data) {
             # code...
             return ApiFormatter::createApi(200, 'success' ,$data);

@@ -71,6 +71,9 @@ Route::group(['middleware' => ['auth', 'CheckRole:admin,super_admin']], function
         Route::post('/new-berita','new_berita');
         Route::get('/admin-edit-berita/{id}','edit_berita');
         Route::post('/remove-berita','remove_berita');
+        // PRESTASI
+        Route::get('/admin-prestasi','admin_prestasi');
+        Route::get('/admin-create-prestasi','admin_create_prestasi');
     });
 
     Route::controller(PaymenttypeController::class)->group(function(){
