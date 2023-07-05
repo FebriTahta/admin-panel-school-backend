@@ -74,6 +74,9 @@ Route::group(['middleware' => ['auth', 'CheckRole:admin,super_admin']], function
         // PRESTASI
         Route::get('/admin-prestasi','admin_prestasi');
         Route::get('/admin-create-prestasi','admin_create_prestasi');
+        // PROGRAM UNGGULAN
+        Route::get('/admin-program-unggulan','admin_program_unggulan');
+        Route::get('/admin-create-program-unggulan','admin_create_program_unggulan');
     });
 
     Route::controller(PaymenttypeController::class)->group(function(){

@@ -11,7 +11,7 @@
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
         <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">Pages</a></li>
-        <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Prestasi</li>
+        <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Program Unggulan</li>
     </ol>
     <h6 class="font-weight-bolder mb-0">Create</h6>
 </nav>
@@ -31,7 +31,7 @@
                   <h6>Berita</h6>
                   <p class="text-sm mb-0">
                     <i class="fa fa-check text-info" aria-hidden="true"></i>
-                    <span class="font-weight-bold ms-1">---</span>  Terbitkan Prestasi
+                    <span class="font-weight-bold ms-1">---</span>  Buat Program Unggulan
                   </p>
                 </div>
               </div>
@@ -41,7 +41,7 @@
                     <div class="row" style="padding: 20px">
                         @if ($status == 'edit')
                             <div class="form-group">
-                                <label for="banner_berita">BANNER BERITA</label>
+                                <label for="banner_berita">BANNER PROGRAM UNGGULAN</label>
                                 <input type="hidden" name="id" value="{{$berita->id}}">
                                 <input type="file" name="news_image" class="form-control" accept="image/*" id="inputGroupFile01" onchange="showPreview(event);">
                                 <div class="preview" style="max-width: 100%; margin-top: 20px">
@@ -50,11 +50,11 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="judul_berita">JUDUL BERITA</label>
+                                <label for="judul_berita">JUDUL PROGRAM UNGGULAN</label>
                                 <input type="text" value="{{$berita->news_title}}" class="form-control" name="news_title" placeholder="......" required>
                             </div>
                             <div class="form-group">
-                                <label for="kategori_berita">KATEGORI BERITA</label>
+                                <label for="kategori_berita">KATEGORI PROGRAM UNGGULAN</label>
                                 @if (count($kategori) < 1)
                                     <br><label class="text-danger">Belum ada kategori berita yang terdaftar, silahkan tambahkan kategori terlebih dahulu</label>
                                 @else
@@ -71,7 +71,7 @@
                                 @endif
                             </div>
                             <div class="form-group">
-                                <label for="deskripsi_kategori">DESKRIPSI BERITA</label>
+                                <label for="deskripsi_kategori">DESKRIPSI PROGRAM UNGGULAN</label>
                                 <textarea name="news_desc" id="summernote" cols="30" rows="10" required>{!!$berita->news_desc!!}</textarea>
                             </div>
                             <div class="form-group">
@@ -79,7 +79,7 @@
                             </div>
                         @else
                             <div class="form-group">
-                                <label for="banner_berita">BANNER BERITA</label>
+                                <label for="banner_berita">BANNER PROGRAM UNGGULAN</label>
                                 <input type="file" name="news_image" class="form-control" accept="image/*" id="inputGroupFile01" onchange="showPreview(event);" required>
                                 <div class="preview" style="max-width: 100%; margin-top: 20px">
                                     <small style="font-size: 12px" class="text-danger" id="text-preview">*Preview Banner</small>
@@ -87,11 +87,11 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="judul_berita">JUDUL BERITA</label>
+                                <label for="judul_berita">JUDUL PROGRAM UNGGULAN</label>
                                 <input type="text" class="form-control" name="news_title" placeholder="......" required>
                             </div>
                             <div class="form-group">
-                                <label for="kategori_berita">KATEGORI BERITA</label>
+                                <label for="kategori_berita">KATEGORI PROGRAM UNGGULAN</label>
                                 @if (count($kategori) < 1)
                                     <br><label class="text-danger">Belum ada kategori berita yang terdaftar, silahkan tambahkan kategori terlebih dahulu</label>
                                 @else
@@ -103,7 +103,7 @@
                                 @endif
                             </div>
                             <div class="form-group">
-                                <label for="deskripsi_kategori">DESKRIPSI BERITA</label>
+                                <label for="deskripsi_kategori">DESKRIPSI PROGRAM UNGGULAN</label>
                                 <textarea name="news_desc" id="summernote" cols="30" rows="10" required></textarea>
                             </div>
                             <div class="form-group">
@@ -177,7 +177,7 @@
                             timer: 2000,
                         }).then(okay => {
                             if (okay) {
-                                window.location.href = "/admin-prestasi";
+                                window.location.href = "/admin-program-unggulan";
                             }
                         });
                     } else {

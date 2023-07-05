@@ -166,4 +166,19 @@ class NewsController extends Controller
         $kategori = Kategori::where('kategori_slug','prestasi')->get();
         return view('pages.create_prestasi',compact('status','kategori'));
     }
+
+    public function admin_program_unggulan()
+    {
+        $berita = News::whereHas('kategori', function($query){
+            $query->where('kategori_slug', 'program-unggulan');
+        })->with('kategori')->paginate(10);
+        return view('pages.program_unggulan_list',compact('berita'));
+    }
+
+    public function admin_create_program_unggulan()
+    {
+        $status = 'create';
+        $kategori = Kategori::where('kategori_slug','program-unggulan')->get();
+        return view('pages.create_program_unggulan',compact('status','kategori'));
+    }
 }

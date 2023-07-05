@@ -87,7 +87,7 @@ class ApiController extends Controller
     public function daftar_berita()
     {
         $data = News::orderBy('id','desc')->whereHas('kategori',function($query){
-            $query->where('kategori_slug','!=','prestasi');
+            $query->where('kategori_slug','!=','prestasi')->where('kategori_slug','!=','program-unggulan');
         })->with('kategori')->paginate(10);
         if ($data) {
             # code...
@@ -102,7 +102,21 @@ class ApiController extends Controller
     {
         $data = News::orderBy('id','desc')->whereHas('kategori',function($query){
             $query->where('kategori_slug', 'prestasi'); 
-        })->with('kategori')->paginate(10);
+        })->with('kategori')->paginate(9);
+        if ($data) {
+            # code...
+            return ApiFormatter::createApi(200, 'success' ,$data);
+        }else {
+            # code...
+            return ApiFormatter::createApi(400, 'failed');
+        }
+    }
+
+    public function daftar_program_unggulan()
+    {
+        $data = News::orderBy('id','desc')->whereHas('kategori',function($query){
+            $query->where('kategori_slug', 'program-unggulan'); 
+        })->with('kategori')->paginate(9);
         if ($data) {
             # code...
             return ApiFormatter::createApi(200, 'success' ,$data);
