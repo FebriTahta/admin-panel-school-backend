@@ -48,21 +48,21 @@ class ProfileController extends Controller
             ]);
         }else {
             if($request->hasFile('profile_image')) {
-                if ($request->id !== null) {
-                    # code...
-                    $datas = Profile::find($request->id);
-                    $image_path1 = public_path("profile_image\\".$datas->profile_image);
-                    $image_path2 = public_path("image_profile\\".$datas->profile_image);
-                    if (File::exists($image_path1)) {
-                        # code...
-                        unlink($image_path1);
-                    }
+                // if ($request->id !== null) {
+                //     # code...
+                //     $datas = Profile::find($request->id);
+                //     $image_path1 = public_path("profile_image\\".$datas->profile_image);
+                //     $image_path2 = public_path("image_profile\\".$datas->profile_image);
+                //     if (File::exists($image_path1)) {
+                //         # code...
+                //         unlink($image_path1);
+                //     }
 
-                    if (File::exists($image_path2)) {
-                        # code...
-                        unlink($image_path2);
-                    }
-                }
+                //     if (File::exists($image_path2)) {
+                //         # code...
+                //         unlink($image_path2);
+                //     }
+                // }
     
                 $filename    = time().'.'.$request->profile_image->getClientOriginalExtension();
                 $request->file('profile_image')->move('profile_image/',$filename);
