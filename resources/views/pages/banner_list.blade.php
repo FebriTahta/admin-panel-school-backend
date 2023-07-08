@@ -76,9 +76,9 @@
 <div class="container-fluid py-4" style="min-height: 500px">
     <div class="row my-4">
         <div class="col-lg-12 col-md-12 mb-md-0 mb-4">
-          <div class="col-md-12 mt-4">
+          {{-- <div class="col-md-12 mt-4">
             <a href="/admin-create-banner" class="btn btn-xs btn-primary">New banner</a>
-        </div>
+        </div> --}}
           <div class="card">
             <div class="card-header pb-0">
               <div class="row">
