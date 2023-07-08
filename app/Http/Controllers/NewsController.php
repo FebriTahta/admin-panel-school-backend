@@ -19,6 +19,30 @@ class NewsController extends Controller
         return view('pages.news_list',compact('berita'));
     }
 
+    public function set_banner($id)
+    {
+        $data = News::find($id);
+        if ($data->news_highlight == 0) {
+            # code...
+            $data->update([
+                'news_highlight' => 1
+            ]);
+            return response()->json([
+                'status'=>200,
+                'message'=> 'Berita telah di set menjadi Banner'
+            ]);
+        }else {
+            # code...
+            $data->update([
+                'news_highlight' => 0
+            ]);
+            return response()->json([
+                'status'=>200,
+                'message'=> 'Berita telah dinonaktifkan dari banner'
+            ]);
+        }
+    }
+
     public function admin_create_berita()
     {
         $status   = 'create';

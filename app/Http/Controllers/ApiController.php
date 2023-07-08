@@ -184,7 +184,8 @@ class ApiController extends Controller
 
     public function display_banner()
     {
-        $data = Banner::orderBy('id','desc')->get();
+        // $data = Banner::orderBy('id','desc')->get();
+        $data = News::where('news_highlight', 1)->get();
         if ($data) {
             # code...
             return ApiFormatter::createApi(200, 'success' ,$data);

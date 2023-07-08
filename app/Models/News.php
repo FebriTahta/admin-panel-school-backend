@@ -10,7 +10,7 @@ class News extends Model
     use HasFactory;
 
     protected $fillable = [
-        'news_title','news_slug','news_image','news_desc','news_view'
+        'news_title','news_slug','news_image','news_desc','news_view','news_highlight'
     ];
 
     public function kategori()

@@ -11,6 +11,68 @@
 @endsection
 
 @section('content')
+<style>
+  .switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+  }
+  
+  .switch input { 
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
+  
+  .slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
+  
+  input:checked + .slider {
+    background-color: #2196F3;
+  }
+  
+  input:focus + .slider {
+    box-shadow: 0 0 1px #2196F3;
+  }
+  
+  input:checked + .slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+  }
+  
+  /* Rounded sliders */
+  .slider.round {
+    border-radius: 34px;
+  }
+  
+  .slider.round:before {
+    border-radius: 50%;
+  }
+  </style>
+
 <div class="container-fluid py-4" style="min-height: 500px">
     <div class="row my-4">
         <div class="col-lg-12 col-md-12 mb-md-0 mb-4">
@@ -36,6 +98,7 @@
                     <tr>
                       <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nama banner</th>
                       <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Desc banner</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Hightlight</th>
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Opsi</th>
                     </tr>
                   </thead>
@@ -45,25 +108,37 @@
                         <td>
                             <div class="d-flex px-2 py-1">
                                 <div>
-                                    <img src="{{asset('image_banner/'.$item->banner_image)}}" class="avatar avatar-sm me-3" alt="team7">
+                                    <img src="{{asset('image_news/'.$item->news_image)}}" class="avatar avatar-sm me-3" alt="team7">
                                 </div>
                                 <div class="d-flex flex-column justify-content-center">
                                     <a href="/admin-edit-banner/{{$item->id}}" >
                                         <h6 class="mb-0 text-sm">
-                                            @if (strlen($item->banner_name) > 30)
-                                                {{substr($item->banner_name,0,30)}} ...
-                                            @else
-                                                {{$item->banner_name}}
-                                            @endif
+                                          @if (strlen($item->news_title) > 30)
+                                              {{substr($item->news_title,0,30)}} ...
+                                          @else
+                                              {{$item->news_title}}
+                                          @endif
                                         </h6>
                                     </a>
                                 </div>
                             </div>
                         </td>
                         <td>
-                            <span class="text-xs font-weight-bold">
-                                {{substr($item->banner_desc,0,50)}}...
-                            </span>
+                          @foreach ($item->kategori as $item_kategori)
+                          <span class="text-xs font-weight-bold">
+                              {{$item_kategori->kategori_name}}
+                          </span>
+                          @endforeach
+                        </td>
+                        <td>
+                          <label class="switch">
+                            <input type="checkbox"
+                              @if ($item->news_highlight == 1)
+                                  checked
+                              @endif
+                            onchange="switch_highlight('{{$item->id}}','{{$item->news_highlight}}')">
+                            <span class="slider round"></span>
+                          </label>
                         </td>
                         <td class="align-middle text-center text-sm">
                             <a href="#x" class="text-xs font-weight-bold text-danger" data-toggle="modal" data-target="#modal-delete" id="btn-dell" 
@@ -137,6 +212,26 @@
 
 @section('script')
 <script>
+
+    function switch_highlight(id) {
+      $.ajax({
+          url: '/admin-set-banner/'+id,
+          type: 'GET',
+          dataType: 'json',
+          success: function(response) {
+            swal({
+                title: "SUCCESS!",
+                text: response.message,
+                type: "success",
+                timer: 2000,
+            }).then(okay => {
+                if (okay) {
+                    window.location.href = "/admin-banner";
+                }
+            });
+          }
+      });
+    }
 
     function hapus(id,banner_name) {
         $('#delete_banner_id').val(id);

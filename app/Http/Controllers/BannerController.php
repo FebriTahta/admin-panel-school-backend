@@ -2,6 +2,7 @@
 namespace App\Http\Controllers;
 use Validator;
 use App\Models\Banner;
+use App\Models\News;
 use Illuminate\Support\Str;
 use Image;
 use File;
@@ -11,7 +12,7 @@ class BannerController extends Controller
 {
     public function admin_banner()
     {
-        $banner = Banner::paginate(10);
+        $banner = News::with('kategori')->orderBy('id','desc')->paginate(10);
         return view('pages.banner_list',compact('banner'));
     }
 
