@@ -12,7 +12,7 @@ class BannerController extends Controller
 {
     public function admin_banner()
     {
-        $banner = News::with('kategori')->orderBy('id','desc')->paginate(10);
+        $banner = Banner::orderBy('id','desc')->paginate(10);
         return view('pages.banner_list',compact('banner'));
     }
 

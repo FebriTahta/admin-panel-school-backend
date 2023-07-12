@@ -22,7 +22,7 @@
     <div class="row my-4">
         <div class="col-lg-12 col-md-12 mb-md-0 mb-4">
           <div class="col-md-12 mt-4">
-            <a href="/admin-daftar-banner" class="btn btn-xs btn-warning">Kembali</a>
+            <a href="/admin-banner" class="btn btn-xs btn-warning">Kembali</a>
         </div>
           <div class="card">
             <div class="card-header pb-0">
