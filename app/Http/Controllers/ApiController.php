@@ -60,6 +60,19 @@ class ApiController extends Controller
         }  
     }
 
+    public function detail_jurusan($jurusan_slug)
+    {
+        $data = Jurusan::where('jurusan_slug',$jurusan_slug)->first();
+
+        if ($data) {
+            # code...
+            return ApiFormatter::createApi(200, 'success' ,$data);
+        }else {
+            # code...
+            return ApiFormatter::createApi(400, 'failed');
+        }
+    }
+
     public function preview_guru()
     {
         $data = Guru::limit(6)->get();
