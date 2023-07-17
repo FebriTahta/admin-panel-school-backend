@@ -113,10 +113,12 @@
                                           # code...
                                           $img = 'banner_image';
                                           $link = '/admin-edit-banner/';
+                                          $tipe = 'banner';
                                       }else {
                                           # code...
                                           $img = 'news_image';
                                           $link = '/admin-edit-berita/';
+                                          $tipe = 'news';
                                       }
                                   @endphp 
                                   <img src="{{asset($img.'/'.$item->banner_image)}}" class="avatar avatar-sm me-3" alt="team7">
@@ -153,7 +155,7 @@
                         </td>
                         <td class="align-middle text-center text-sm">
                             <a href="#x" class="text-xs font-weight-bold text-danger" data-toggle="modal" data-target="#modal-delete" id="btn-dell" 
-                            onclick="hapus('{{$item->id}}','{{$item->banner_name}}')"
+                            onclick="hapus('{{$item->id}}','{{$item->banner_name}}','{{$tipe}}')"
                             > Hapus </a>
                         </td>
                     </tr>
@@ -244,13 +246,16 @@
       });
     }
 
-    function hapus(id,banner_name) {
+    var tipe;
+    function hapus(id,banner_name,tipe) {
         $('#delete_banner_id').val(id);
         $('#delete_banner_name').val(banner_name);
         console.log(id +'-'+ banner_name);
+        tipe = tipe;
     }
 
-    $('#form_dell').submit(function(e) {
+    if (tipe == 'banner') {
+      $('#form_dell').submit(function(e) {
         e.preventDefault();
         var formData = new FormData(this);
         $.ajax({
@@ -296,5 +301,54 @@
             }
         });
     });
+    }else{
+      $('#form_dell').submit(function(e) {
+        e.preventDefault();
+        var formData = new FormData(this);
+        $.ajax({
+            type: 'POST',
+            url: "/remove-news",
+            data: formData,
+            cache: false,
+            contentType: false,
+            processData: false,
+            beforeSend: function() {
+                $('#btndel').attr('disabled', 'disabled');
+                $('#btndel').val('Process...');
+            },
+            success: function(response) {
+                if (response.status == 200) {
+                    $("#form_dell")[0].reset();
+                    $('#btndel').val('Hapus');
+                    $('#btndel').attr('disabled', false);
+                    toastr.success(response.message);
+                    swal({
+                        title: "SUCCESS!",
+                        text: response.message,
+                        type: "success",
+                        timer: 2000,
+                    }).then(okay => {
+                        if (okay) {
+                            window.location.href = "/admin-banner";
+                        }
+                    });
+                } else {
+                    $('#btndel').val('Hapus!');
+                    $('#btndel').attr('disabled', false);
+                    toastr.error(response.message);
+                    $('#errList').html("");
+                    $('#errList').addClass('alert alert-danger');
+                    $.each(response.errors, function(key, err_values) {
+                        $('#errList').append('<div>' + err_values + '</div>');
+                    });
+                }
+            },
+            error: function(data) {
+                console.log(data);
+            }
+        });
+    });
+    }
+    
 </script>
 @endsection
