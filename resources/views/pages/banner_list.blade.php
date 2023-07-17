@@ -112,15 +112,17 @@
                                       if (File::exists(public_path("banner_image\\".$item->banner_image))) {
                                           # code...
                                           $img = 'banner_image';
+                                          $link = '/admin-edit-banner/';
                                       }else {
                                           # code...
                                           $img = 'news_image';
+                                          $link = '/admin-edit-berita/';
                                       }
                                   @endphp 
                                   <img src="{{asset($img.'/'.$item->banner_image)}}" class="avatar avatar-sm me-3" alt="team7">
                                 </div>
                                 <div class="d-flex flex-column justify-content-center">
-                                    <a href="/admin-edit-banner/{{$item->id}}" >
+                                    <a href="{{$link}}{{$item->id}}" >
                                         <h6 class="mb-0 text-sm">
                                           @if (strlen($item->banner_name) > 30)
                                               {{substr($item->banner_name,0,30)}} ...

@@ -67,7 +67,7 @@ class NewsController extends Controller
                 ]);
             }
         }
-        
+
     }
 
     public function admin_create_berita()
