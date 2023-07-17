@@ -11,9 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('jurusans', function (Blueprint $table) {
-            $table->integer('jurusan_anak')->default(0)->nullable();
-            $table->integer('jurusan_kelas')->default(0)->nullable();
+        Schema::table('banners', function (Blueprint $table) {
+            $table->integer('banner_highlight')->default(0)->nullable();
         });
     }
 
@@ -22,9 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('jurusans', function (Blueprint $table) {
-            $table->integer('jurusan_anak');
-            $table->integer('jurusan_kelas');
+        Schema::table('banners', function (Blueprint $table) {
+            $table->dropColumn('banner_highlight');
         });
     }
 };

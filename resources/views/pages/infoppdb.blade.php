@@ -4,9 +4,9 @@
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
         <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">Pages</a></li>
-        <li class="breadcrumb-item text-sm text-dark active" aria-current="page">banner</li>
+        <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Informasi</li>
     </ol>
-    <h6 class="font-weight-bolder mb-0">List</h6>
+    <h6 class="font-weight-bolder mb-0">PPDB</h6>
 </nav>
 @endsection
 
@@ -77,16 +77,16 @@
     <div class="row my-4">
         <div class="col-lg-12 col-md-12 mb-md-0 mb-4">
           <div class="col-md-12 mt-4">
-            <a href="/admin-create-banner" class="btn btn-xs btn-primary">New banner</a>
+            <a href="/admin-create-infoppdb" class="btn btn-xs btn-primary">New Info PPDB</a>
         </div>
           <div class="card">
             <div class="card-header pb-0">
               <div class="row">
                 <div class="col-lg-6 col-7">
-                  <h6>banner</h6>
+                  <h6>Info PPDB</h6>
                   <p class="text-sm mb-0">
                     <i class="fa fa-check text-info" aria-hidden="true"></i>
-                    <span class="font-weight-bold ms-1">---</span>  Daftar banner
+                    <span class="font-weight-bold ms-1">---</span>  Daftar Informasi
                   </p>
                 </div>
               </div>
@@ -96,62 +96,38 @@
                 <table class="table align-items-center mb-0">
                   <thead>
                     <tr>
-                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nama banner</th>
-                      {{-- <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Desc banner</th> --}}
-                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Hightlight</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Judul Informasi</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Tahun</th>
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Opsi</th>
                     </tr>
                   </thead>
                   <tbody>
-                    @foreach ($banner as $item)
+                    @foreach ($data as $item)
                     <tr>
                         <td>
                             <div class="d-flex px-2 py-1">
                                 <div>
-                                  @php
-                                      if (File::exists(public_path("banner_image\\".$item->banner_image))) {
-                                          # code...
-                                          $img = 'banner_image';
-                                      }else {
-                                          # code...
-                                          $img = 'news_image';
-                                      }
-                                  @endphp 
-                                  <img src="{{asset($img.'/'.$item->banner_image)}}" class="avatar avatar-sm me-3" alt="team7">
+                                    <img src="{{asset('image_infoppdb/'.$item->infoppdb_image)}}" class="avatar avatar-sm me-3" alt="team7">
                                 </div>
                                 <div class="d-flex flex-column justify-content-center">
-                                    <a href="/admin-edit-banner/{{$item->id}}" >
+                                    <a href="/admin-edit-infoppdb/{{$item->id}}" >
                                         <h6 class="mb-0 text-sm">
-                                          @if (strlen($item->banner_name) > 30)
-                                              {{substr($item->banner_name,0,30)}} ...
+                                          @if (strlen($item->infoppdb_title) > 30)
+                                              {{substr($item->infoppdb_title,0,30)}} ...
                                           @else
-                                              {{$item->banner_name}}
+                                              {{$item->infoppdb_title}}
                                           @endif
                                         </h6>
                                     </a>
                                 </div>
                             </div>
                         </td>
-                        {{-- <td>
-                          @foreach ($item->kategori as $item_kategori)
-                          <span class="text-xs font-weight-bold">
-                              {{$item_kategori->kategori_name}}
-                          </span>
-                          @endforeach
-                        </td> --}}
                         <td>
-                          <label class="switch">
-                            <input type="checkbox"
-                              @if ($item->banner_highlight == 1)
-                                  checked
-                              @endif
-                            onchange="switch_highlight('{{$item->id}}','{{$item->banner_highlight}}')">
-                            <span class="slider round"></span>
-                          </label>
+                            {{$item->infoppdb_yearone}}
                         </td>
                         <td class="align-middle text-center text-sm">
                             <a href="#x" class="text-xs font-weight-bold text-danger" data-toggle="modal" data-target="#modal-delete" id="btn-dell" 
-                            onclick="hapus('{{$item->id}}','{{$item->banner_name}}')"
+                            onclick="hapus('{{$item->id}}','{{$item->infoppdb_title}}')"
                             > Hapus </a>
                         </td>
                     </tr>
@@ -162,7 +138,7 @@
             </div>
           </div>
           <div class="pagination" style="margin-top: 20px">
-            {{$banner->links('pagination::bootstrap-4')}}
+            {{$data->links('pagination::bootstrap-4')}}
           </div>
         </div>
       </div>
@@ -253,7 +229,7 @@
         var formData = new FormData(this);
         $.ajax({
             type: 'POST',
-            url: "/remove-banner",
+            url: "/remove-infoppdb",
             data: formData,
             cache: false,
             contentType: false,
@@ -275,7 +251,7 @@
                         timer: 2000,
                     }).then(okay => {
                         if (okay) {
-                            window.location.href = "/admin-banner";
+                            window.location.href = "/admin-informasi-ppdb";
                         }
                     });
                 } else {

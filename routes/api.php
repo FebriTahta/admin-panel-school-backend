@@ -29,6 +29,7 @@ Route::controller(ApiController::class)->group(function(){
     Route::get('display-profile','display_profile');
     Route::get('total-siswa','total_siswa');
     Route::get('preview-kesiswaan','preview_kesiswaan');
+    Route::get('last-informasi-ppdb','las_infoppdb');
 
     // page
 
@@ -45,4 +46,6 @@ Route::controller(ApiController::class)->group(function(){
     Route::get('daftar-kesiswaan','daftar_kesiswaan');
     Route::get('detail-kesiswaan/{kesiswaan_slug}','detail_kesiswaan');
     Route::get('daftar-kesiswaan-berdasarkan-kategori/{kategori_slug}','daftar_kesiswaan_berdasarkan_kategori');
+    Route::get('daftar-informasi-ppdb','daftar_infoppdb');
+    Route::get('detail-informasi-ppdb/{slug}','detail_infoppdb');
 });

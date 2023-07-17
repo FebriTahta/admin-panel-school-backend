@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Models\News;
+use App\Models\Banner;
 use Validator;
 use Image;
 use File;
@@ -22,25 +23,51 @@ class NewsController extends Controller
     public function set_banner($id)
     {
         $data = News::find($id);
-        if ($data->news_highlight == 0) {
+        $data2 = Banner::find($id);
+        if ($data2 == null && $data !== null) {
             # code...
-            $data->update([
-                'news_highlight' => 1
-            ]);
-            return response()->json([
-                'status'=>200,
-                'message'=> 'Berita telah di set menjadi Banner'
-            ]);
+            if ($data->news_highlight == 0) {
+                # code...
+                $data->update([
+                    'news_highlight' => 1
+                ]);
+                return response()->json([
+                    'status'=>200,
+                    'message'=> 'Berita telah di set menjadi Banner'
+                ]);
+            }else {
+                # code...
+                $data->update([
+                    'news_highlight' => 0
+                ]);
+                return response()->json([
+                    'status'=>200,
+                    'message'=> 'Berita telah dinonaktifkan dari banner'
+                ]);
+            }
         }else {
             # code...
-            $data->update([
-                'news_highlight' => 0
-            ]);
-            return response()->json([
-                'status'=>200,
-                'message'=> 'Berita telah dinonaktifkan dari banner'
-            ]);
+            if ($data2->banner_highlight == 0) {
+                # code...
+                $data2->update([
+                    'banner_highlight' => 1
+                ]);
+                return response()->json([
+                    'status'=>200,
+                    'message'=> 'Berita telah di set menjadi Banner'
+                ]);
+            }else {
+                # code...
+                $data2->update([
+                    'banner_highlight' => 0
+                ]);
+                return response()->json([
+                    'status'=>200,
+                    'message'=> 'Berita telah dinonaktifkan dari banner'
+                ]);
+            }
         }
+        
     }
 
     public function admin_create_berita()

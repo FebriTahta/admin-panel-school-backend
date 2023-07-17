@@ -8,8 +8,11 @@ use App\Models\Guru;
 use App\Models\Profile;
 use App\Models\Kesiswaan;
 use App\Models\Banner;
+use File;
+use Image;
 use DB;
 use App\Helpers\ApiFormatter;
+use App\Models\Infoppdb;
 use Illuminate\Http\Request;
 
 class ApiController extends Controller
@@ -197,8 +200,35 @@ class ApiController extends Controller
 
     public function display_banner()
     {
-        $data = Banner::orderBy('id','desc')->get();
-        // $data = News::where('news_highlight', 1)->get();
+        $data1 = Banner::where('banner_highlight',1)->select('id','banner_name','banner_highlight','banner_desc','banner_slug','banner_image');
+        $data2 = News::where('news_highlight', 1)->select('id','news_title','news_highlight','news_desc','news_slug','news_image');
+        $banner = $data1->union($data2)->get();
+        
+        $img = [];
+        foreach ($banner as $key => $item) {
+            # code...
+            if (File::exists(public_path("banner_image\\".$item->banner_image))) {
+                # code...
+                $img[] = '/banner_image/';
+            }else {
+                # code...
+                $img[] = '/news_image/';
+            }
+        }
+
+        $data = [];
+        foreach ($banner as $key => $value) {
+            # code...
+            $data[] = [
+                'id'=>$value->id,
+                'banner_name'=>$value->banner_name,
+                'banner_slug'=>$value->banner_slug,
+                'banner_image'=>$value->banner_image,
+                'banner_desc'=>$value->banner_desc,
+                'banner_path'=>$img[$key],
+            ];
+        }
+
         if ($data) {
             # code...
             return ApiFormatter::createApi(200, 'success' ,$data);
@@ -295,5 +325,42 @@ class ApiController extends Controller
             # code...
             return ApiFormatter::createApi(400, 'failed');
         }
+    }
+
+    public function las_infoppdb()
+    {
+        $data = Infoppdb::latest()->first();
+        if ($data) {
+            # code...
+            return ApiFormatter::createApi(200, 'success' ,$data);
+        }else {
+            # code...
+            return ApiFormatter::createApi(400, 'failed');
+        }
+    }
+
+    public function daftar_infoppdb()
+    {
+        $data = Infoppdb::paginate(10);
+        if ($data) {
+            # code...
+            return ApiFormatter::createApi(200, 'success' ,$data);
+        }else {
+            # code...
+            return ApiFormatter::createApi(400, 'failed');
+        }
+    }
+
+    public function detail_infoppdb($slug)
+    {
+        $data = Infoppdb::where('infoppdb_slug',$slug)->first();
+        if ($data) {
+            # code...
+            return ApiFormatter::createApi(200, 'success' ,$data);
+        }else {
+            # code...
+            return ApiFormatter::createApi(400, 'failed');
+        }
+        
     }
 }

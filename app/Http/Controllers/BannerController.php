@@ -12,7 +12,12 @@ class BannerController extends Controller
 {
     public function admin_banner()
     {
-        $banner = Banner::orderBy('id','desc')->paginate(10);
+        // $banner = Banner::orderBy('id','desc')->paginate(10);
+        $data1 = Banner::select('id','banner_name','banner_highlight','banner_desc','banner_slug','banner_image');
+        $data2 = News::select('id','news_title','news_highlight','news_desc','news_slug','news_image');
+        $banner = $data1->union($data2)->paginate(10);
+
+        
         return view('pages.banner_list',compact('banner'));
     }
 

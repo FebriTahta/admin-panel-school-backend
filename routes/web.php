@@ -11,6 +11,7 @@ use App\Http\Controllers\GuruController;
 use App\Http\Controllers\BannerController;
 use App\Http\Controllers\KesiswaanController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\InformasiPPDBCOntroller;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -124,6 +125,14 @@ Route::group(['middleware' => ['auth', 'CheckRole:admin,super_admin']], function
         Route::post('/new-kesiswaan','new_kesiswaan');
         Route::post('/remove-kesiswaan','remove_kesiswaan');
         Route::post('/remove-dokumen-kesiswaan','remove_dokumen_kesiswaan');
+    });
+
+    Route::controller(InformasiPPDBCOntroller::class)->group(function(){
+        Route::get('/admin-informasi-ppdb','informasi_ppdb');
+        Route::get('/admin-create-infoppdb','create_infoppdb');
+        Route::post('/new-infoppdb','new_infoppdb');
+        Route::get('/admin-edit-infoppdb/{id}','edit_infoppdb');
+        Route::post('/remove-infoppdb','hapus_infoppdb');
     });
 });
 
