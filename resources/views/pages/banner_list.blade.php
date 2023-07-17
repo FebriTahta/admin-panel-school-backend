@@ -307,7 +307,7 @@
         var formData = new FormData(this);
         $.ajax({
             type: 'POST',
-            url: "/remove-news",
+            url: "/remove-berita",
             data: formData,
             cache: false,
             contentType: false,
