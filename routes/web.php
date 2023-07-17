@@ -11,7 +11,7 @@ use App\Http\Controllers\GuruController;
 use App\Http\Controllers\BannerController;
 use App\Http\Controllers\KesiswaanController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\InformasiPPDBCOntroller;
+use App\Http\Controllers\InformasiPPDBController;
 use Illuminate\Support\Facades\Route;
 
 /*
