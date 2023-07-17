@@ -101,7 +101,7 @@ class NewsController extends Controller
         }
         if (count($data->kategori) > 0) {
             # code...
-            $data->kategori->detach();
+            $data->kategori()->detach();
         }
         $data->delete();
         # code...
