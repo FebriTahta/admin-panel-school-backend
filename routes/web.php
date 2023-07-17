@@ -127,7 +127,7 @@ Route::group(['middleware' => ['auth', 'CheckRole:admin,super_admin']], function
         Route::post('/remove-dokumen-kesiswaan','remove_dokumen_kesiswaan');
     });
 
-    Route::controller(InformasiPPDBCOntroller::class)->group(function(){
+    Route::controller(InformasiPPDBController::class)->group(function(){
         Route::get('/admin-informasi-ppdb','informasi_ppdb');
         Route::get('/admin-create-infoppdb','create_infoppdb');
         Route::post('/new-infoppdb','new_infoppdb');
