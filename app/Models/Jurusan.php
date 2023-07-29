@@ -12,4 +12,9 @@ class Jurusan extends Model
     protected $fillable= [
         'jurusan_name','jurusan_slug','jurusan_image','jurusan_desc','jurusan_anak','jurusan_kelas'
     ];
+
+    public function alumni()
+    {
+        return $this->hasMany(Alumni::class);
+    }
 }

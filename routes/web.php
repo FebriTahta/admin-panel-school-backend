@@ -12,6 +12,7 @@ use App\Http\Controllers\BannerController;
 use App\Http\Controllers\KesiswaanController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\InformasiPPDBController;
+use App\Http\Controllers\AlumniController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -133,6 +134,15 @@ Route::group(['middleware' => ['auth', 'CheckRole:admin,super_admin']], function
         Route::post('/new-infoppdb','new_infoppdb');
         Route::get('/admin-edit-infoppdb/{id}','edit_infoppdb');
         Route::post('/remove-infoppdb','hapus_infoppdb');
+    });
+
+    Route::controller(AlumniController::class)->group(function(){
+        Route::get('/admin-alumni','admin_alumni');
+        Route::get('/admin-create-alumni','create_alumni');
+        Route::post('/new-alumni','new_alumni');
+        Route::get('/admin-edit-alumni/{id}','edit_alumni');
+        Route::get('/admin-set-alumni/{id}','set_alumni');
+        Route::post('/remove-alumni','hapus_alumni');
     });
 });
 

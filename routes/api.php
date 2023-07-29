@@ -48,4 +48,8 @@ Route::controller(ApiController::class)->group(function(){
     Route::get('daftar-kesiswaan-berdasarkan-kategori/{kategori_slug}','daftar_kesiswaan_berdasarkan_kategori');
     Route::get('daftar-informasi-ppdb','daftar_infoppdb');
     Route::get('detail-informasi-ppdb/{slug}','detail_infoppdb');
+    Route::get('daftar-alumni','daftar_alumni');
+    Route::get('daftar-jurusan-alumni','daftar_jurusan_alumni');
+
+    Route::post('new-alumni','add_alumni_and_ulasan');
 });

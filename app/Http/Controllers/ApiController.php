@@ -8,9 +8,11 @@ use App\Models\Guru;
 use App\Models\Profile;
 use App\Models\Kesiswaan;
 use App\Models\Banner;
+use App\Models\Alumni;
 use File;
 use Image;
 use DB;
+use Validator;
 use App\Helpers\ApiFormatter;
 use App\Models\Infoppdb;
 use Illuminate\Http\Request;
@@ -362,5 +364,116 @@ class ApiController extends Controller
             return ApiFormatter::createApi(400, 'failed');
         }
         
+    }
+
+    public function daftar_alumni()
+    {
+        $data = $data = Alumni::with(['jurusan'])->orderBy('id','desc')->paginate(20);
+        if ($data) {
+            # code...
+            return ApiFormatter::createApi(200, 'success' ,$data);
+        }else {
+            # code...
+            return ApiFormatter::createApi(400, 'failed');
+        }
+    }
+
+    public function daftar_jurusan_alumni()
+    {
+        $data = Jurusan::whereHas('alumni')->withCount('alumni')->get();
+        if ($data) {
+            # code...
+            return ApiFormatter::createApi(200, 'success' ,$data);
+        }else {
+            # code...
+            return ApiFormatter::createApi(400, 'failed');
+        }
+    }
+
+    public function createThumbnail($path, $width, $height)
+    {
+        $img = Image::make($path)->resize($width, $height, function ($constraint) {
+            $constraint->aspectRatio();
+        });
+        $img->save($path);
+    }
+
+    public function add_alumni_and_ulasan(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'alumni_name'  => 'required|max:100',
+            'jurusan_id'  => 'required|',
+            'alumni_pekerjaan'  => 'required|',
+            'alumni_alamatpekerjaan'  => 'required|',
+            'alumni_tahunmasuk'  => 'required|',
+            'alumni_tahunkeluar'  => 'required|',
+            'alumni_telp'  => 'required|',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 400,
+                'message'  => $validator->messages().'',
+            ]);
+        }else {
+            if($request->hasFile('alumni_image')) {
+                if ($request->id !== null) {
+                    # code...
+                    $datas = Alumni::find($request->id);
+                    $image_path1 = public_path("alumni_image\\".$datas->alumni_image);
+                    $image_path2 = public_path("image_alumni\\".$datas->alumni_image);
+                    if (File::exists($image_path1)) {
+                        # code...
+                        unlink($image_path1);
+                    }
+
+                    if (File::exists($image_path2)) {
+                        # code...
+                        unlink($image_path2);
+                    }
+                }
+
+                $filename    = time().'.'.$request->alumni_image->getClientOriginalExtension();
+                $request->file('alumni_image')->move('alumni_image/',$filename);
+                $thumbnail   = $filename;
+                File::copy(public_path('alumni_image/'.$filename), public_path('image_alumni/'.$thumbnail));
+
+                $largethumbnailpath = public_path('alumni_image/'.$thumbnail);
+                $this->createThumbnail($largethumbnailpath, 800, 800);
+
+                $data = Alumni::updateOrCreate(
+                    [
+                        'id'=> $request->id,
+                    ],
+                    [
+                        'alumni_name'        => $request->alumni_name,
+                        'alumni_telp'        => $request->alumni_telp,
+                        'jurusan_id'         => $request->jurusan_id,
+                        'alumni_tahunmasuk'  => $request->alumni_tahunmasuk,
+                        'alumni_tahunkeluar' => $request->alumni_tahunkeluar,
+                        'alumni_pekerjaan'   => $request->alumni_pekerjaan,
+                        'alumni_alamatpekerjaan' => $request->alumni_alamatpekerjaan,
+                        'alumni_image'       => $filename,
+                    ]
+                );
+
+            }else{
+                $data = Alumni::updateOrCreate(
+                    [
+                        'id'=> $request->id,
+                    ],
+                    [
+                        'alumni_name'        => $request->alumni_name,
+                        'alumni_telp'        => $request->alumni_telp,
+                        'jurusan_id'         => $request->jurusan_id,
+                        'alumni_tahunmasuk'  => $request->alumni_tahunmasuk,
+                        'alumni_tahunkeluar' => $request->alumni_tahunkeluar,
+                        'alumni_pekerjaan'   => $request->alumni_pekerjaan,
+                        'alumni_alamatpekerjaan' => $request->alumni_alamatpekerjaan,
+                    ]
+                );
+            }
+            return response()->json(['status'=>200,'message'=>'data alumni berhasil disimpan, menunggu persetujuan admin untuk menampilkan data'],200);
+        }
     }
 }
