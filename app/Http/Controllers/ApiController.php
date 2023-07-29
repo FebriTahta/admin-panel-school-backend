@@ -381,7 +381,7 @@ class ApiController extends Controller
     public function daftar_jurusan_alumni()
     {
         $data = Jurusan::where('alumni_status',1)->whereHas('alumni')->withCount('alumni')->get();
-        if ($data) {
+        if ($data) { 
             # code...
             return ApiFormatter::createApi(200, 'success' ,$data);
         }else {
