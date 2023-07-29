@@ -368,7 +368,7 @@ class ApiController extends Controller
 
     public function daftar_alumni()
     {
-        $data = $data = Alumni::with(['jurusan'])->orderBy('id','desc')->paginate(20);
+        $data = $data = Alumni::where('alumni_status',"1")->with(['jurusan'])->orderBy('id','desc')->paginate(20);
         if ($data) {
             # code...
             return ApiFormatter::createApi(200, 'success' ,$data);
@@ -380,7 +380,7 @@ class ApiController extends Controller
 
     public function daftar_jurusan_alumni()
     {
-        $data = Jurusan::where('alumni_status',1)->whereHas('alumni')->withCount('alumni')->get();
+        $data = Jurusan::whereHas('alumni')->withCount('alumni')->get();
         if ($data) { 
             # code...
             return ApiFormatter::createApi(200, 'success' ,$data);
