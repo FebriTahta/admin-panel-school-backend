@@ -1,8 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\models\Alumni;
-use App\models\Jurusan;
+use App\Models\Alumni;
+use App\Models\Jurusan;
 use File;
 use Image;
 use Validator;
