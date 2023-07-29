@@ -128,7 +128,11 @@
                             {{$item->alumni_pekerjaan}}
                         </td>
                         <td  class="text-xs font-weight-bold">
-                            {{$item->alumni_alamatpekerjaan}}
+                          @if (strlen($item->alumni_alamatpekerjaan) > 30)
+                              {{substr($item->alumni_alamatpekerjaan,0,30)}} ...
+                          @else
+                              {{$item->alumni_alamatpekerjaan}}
+                          @endif
                         </td>
                         <td>
                           <label class="switch">
