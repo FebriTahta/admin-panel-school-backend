@@ -99,6 +99,7 @@
                       <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nama banner</th>
                       {{-- <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Desc banner</th> --}}
                       <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Hightlight</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Path</th>
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Opsi</th>
                     </tr>
                   </thead>
@@ -109,6 +110,7 @@
                             <div class="d-flex px-2 py-1">
                                 <div>
                                   @php
+                                  $img; $link; $tipe;
                                       if (File::exists(public_path("banner_image\\".$item->banner_image))) {
                                           # code...
                                           $img = 'banner_image';
@@ -152,6 +154,9 @@
                             onchange="switch_highlight('{{$item->id}}','{{$item->banner_highlight}}')">
                             <span class="slider round"></span>
                           </label>
+                        </td>
+                        <td>
+                          {{$img}}
                         </td>
                         <td class="align-middle text-center text-sm">
                             <a href="#x" class="text-xs font-weight-bold text-danger" data-toggle="modal" data-target="#modal-delete" id="btn-dell" 
