@@ -97,73 +97,85 @@
                   <thead>
                     <tr>
                       <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nama banner</th>
-                      {{-- <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Desc banner</th> --}}
                       <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Hightlight</th>
-                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Path</th>
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Opsi</th>
                     </tr>
                   </thead>
                   <tbody>
                     @foreach ($banner as $item)
-                    <tr>
-                        <td>
-                            <div class="d-flex px-2 py-1">
-                                <div>
-                                  @php
-                                  $img; $link; $tipe;
-                                      if (File::exists(public_path("banner_image\\".$item->banner_image))) {
-                                          # code...
-                                          $img = 'banner_image';
-                                          $link = '/admin-edit-banner/';
-                                          $tipe = 'banner';
-                                      }else {
-                                          # code...
-                                          $img = 'news_image';
-                                          $link = '/admin-edit-berita/';
-                                          $tipe = 'news';
-                                      }
-                                  @endphp 
-                                  <img src="{{asset($img.'/'.$item->banner_image)}}" class="avatar avatar-sm me-3" alt="team7">
-                                </div>
-                                <div class="d-flex flex-column justify-content-center">
-                                    <a href="{{$link}}{{$item->id}}" >
-                                        <h6 class="mb-0 text-sm">
-                                          @if (strlen($item->banner_name) > 30)
-                                              {{substr($item->banner_name,0,30)}} ...
-                                          @else
-                                              {{$item->banner_name}}
-                                          @endif
-                                        </h6>
-                                    </a>
-                                </div>
-                            </div>
-                        </td>
-                        {{-- <td>
-                          @foreach ($item->kategori as $item_kategori)
-                          <span class="text-xs font-weight-bold">
-                              {{$item_kategori->kategori_name}}
-                          </span>
-                          @endforeach
-                        </td> --}}
-                        <td>
-                          <label class="switch">
-                            <input type="checkbox"
-                              @if ($item->banner_highlight == 1)
-                                  checked
-                              @endif
-                            onchange="switch_highlight('{{$item->id}}','{{$item->banner_highlight}}')">
-                            <span class="slider round"></span>
-                          </label>
-                        </td>
-                        <td>
-                          {{$img}}
-                        </td>
-                        <td class="align-middle text-center text-sm">
-                            <a href="#x" class="text-xs font-weight-bold text-danger" data-toggle="modal" data-target="#modal-delete" id="btn-dell" 
-                            onclick="hapus('{{$item->id}}','{{$item->banner_name}}','{{$tipe}}')"
-                            > Hapus </a>
-                        </td>
-                    </tr>
+                      @if ($item['path'] == 'banner_image')
+                        <tr>
+                          <td>
+                              <div class="d-flex px-2 py-1">
+                                  <div>
+                                    <img src="{{asset($item['path'].'/'.$item['banner_image'])}}" class="avatar avatar-sm me-3" alt="team7">
+                                  </div>
+                                  <div class="d-flex flex-column justify-content-center">
+                                      <a href="/admin-edit-banner/{{$item['id']}}" >
+                                          <h6 class="mb-0 text-sm">
+                                            @if (strlen($item['banner_name']) > 30)
+                                                {{substr($item['banner_name'],0,30)}} ...
+                                            @else
+                                                {{$item['banner_name']}}
+                                            @endif
+                                          </h6>
+                                      </a>
+                                  </div>
+                              </div>
+                          </td>
+                          <td>
+                            <label class="switch">
+                              <input type="checkbox"
+                                @if ($item['banner_highlight'] == 1)
+                                    checked
+                                @endif
+                              onchange="switch_highlight('{{$item['id']}}','{{$item['path']}}')">
+                              <span class="slider round"></span>
+                            </label>
+                          </td>
+                          <td class="align-middle text-center text-sm">
+                              <a href="#x" class="text-xs font-weight-bold text-danger" data-toggle="modal" data-target="#modal-delete" id="btn-dell" 
+                              onclick="hapus('{{$item['id']}}','{{$item['banner_name']}}','banner')"
+                              > Hapus </a>
+                          </td>
+                        </tr>
+                      @else
+                        <tr>
+                          <td>
+                              <div class="d-flex px-2 py-1">
+                                  <div>
+                                    <img src="{{asset($item['path'].'/'.$item['news_image'])}}" class="avatar avatar-sm me-3" alt="team7">
+                                  </div>
+                                  <div class="d-flex flex-column justify-content-center">
+                                      <a href="/admin-edit-berita/{{$item['id']}}" >
+                                          <h6 class="mb-0 text-sm">
+                                            @if (strlen($item['news_title']) > 30)
+                                                {{substr($item['news_title'],0,30)}} ...
+                                            @else
+                                                {{$item['news_title']}}
+                                            @endif
+                                          </h6>
+                                      </a>
+                                  </div>
+                              </div>
+                          </td>
+                          <td>
+                            <label class="switch">
+                              <input type="checkbox"
+                                @if ($item['news_highlight'] == 1)
+                                    checked
+                                @endif
+                              onchange="switch_highlight('{{$item['id']}}','{{$item['path']}}')">
+                              <span class="slider round"></span>
+                            </label>
+                          </td>
+                          <td class="align-middle text-center text-sm">
+                              <a href="#x" class="text-xs font-weight-bold text-danger" data-toggle="modal" data-target="#modal-delete" id="btn-dell" 
+                              onclick="hapus('{{$item['id']}}','{{$item['news_title']}}','news')"
+                              > Hapus </a>
+                          </td>
+                        </tr>
+                      @endif
                     @endforeach
                   </tbody>
                 </table>
@@ -171,7 +183,7 @@
             </div>
           </div>
           <div class="pagination" style="margin-top: 20px">
-            {{$banner->links('pagination::bootstrap-4')}}
+            {{-- {{$banner->links('pagination::bootstrap-4')}} --}}
           </div>
         </div>
       </div>
@@ -231,9 +243,15 @@
 @section('script')
 <script>
 
-    function switch_highlight(id) {
+    function switch_highlight(id,path) {
+      var url;
+      if (path == 'banner_image') {
+        url = '/admin-set-banner/'+id+'/'+path
+      }else{
+        url = '/admin-set-banner/'+id+'/'+path
+      }
       $.ajax({
-          url: '/admin-set-banner/'+id,
+          url: url,
           type: 'GET',
           dataType: 'json',
           success: function(response) {

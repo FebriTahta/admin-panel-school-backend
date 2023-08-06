@@ -20,53 +20,59 @@ class NewsController extends Controller
         return view('pages.news_list',compact('berita'));
     }
 
-    public function set_banner($id)
+    public function set_banner($id, $tipe)
     {
-        $data = News::find($id);
-        $data2 = Banner::find($id);
-        if ($data2 == null && $data !== null) {
+        if ($tipe == 'news_image') {
             # code...
-            if ($data->news_highlight == 0) {
+            $data2 = News::find($id);
+            if ($data2) {
                 # code...
-                $data->update([
-                    'news_highlight' => 1
-                ]);
-                return response()->json([
-                    'status'=>200,
-                    'message'=> 'Berita telah di set menjadi Banner'
-                ]);
-            }else {
-                # code...
-                $data->update([
-                    'news_highlight' => 0
-                ]);
-                return response()->json([
-                    'status'=>200,
-                    'message'=> 'Berita telah dinonaktifkan dari banner'
-                ]);
+                if ($data2->news_highlight == 0) {
+                    # code...
+                    $data2->update([
+                        'news_highlight' => 1
+                    ]);
+                    return response()->json([
+                        'status'=>200,
+                        'message'=> 'Berita telah di set menjadi Banner'
+                    ]);
+                }else {
+                    # code...
+                    $data2->update([
+                        'news_highlight' => 0
+                    ]);
+                    return response()->json([
+                        'status'=>200,
+                        'message'=> 'Berita telah dinonaktifkan dari banner'
+                    ]);
+                }
             }
         }else {
             # code...
-            if ($data2->banner_highlight == 0) {
+            $data = Banner::find($id);
+            if($data) {
                 # code...
-                $data2->update([
-                    'banner_highlight' => 1
-                ]);
-                return response()->json([
-                    'status'=>200,
-                    'message'=> 'Berita telah di set menjadi Banner'
-                ]);
-            }else {
-                # code...
-                $data2->update([
-                    'banner_highlight' => 0
-                ]);
-                return response()->json([
-                    'status'=>200,
-                    'message'=> 'Berita telah dinonaktifkan dari banner'
-                ]);
+                if ($data->banner_highlight == 0) {
+                    # code...
+                    $data->update([
+                        'banner_highlight' => 1
+                    ]);
+                    return response()->json([
+                        'status'=>200,
+                        'message'=> 'Banner telah di set menjadi Banner'
+                    ]);
+                }else {
+                    # code...
+                    $data->update([
+                        'banner_highlight' => 0
+                    ]);
+                    return response()->json([
+                        'status'=>200,
+                        'message'=> 'Banner telah dinonaktifkan dari banner'
+                    ]);
+                }
             }
-        }
+        }    
 
     }
 

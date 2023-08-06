@@ -202,34 +202,59 @@ class ApiController extends Controller
 
     public function display_banner()
     {
-        $data1 = Banner::where('banner_highlight',1)->select('id','banner_name','banner_highlight','banner_desc','banner_slug','banner_image');
-        $data2 = News::where('news_highlight', 1)->select('id','news_title','news_highlight','news_desc','news_slug','news_image');
-        $banner = $data1->union($data2)->get();
+        // $data1 = Banner::where('banner_highlight',1)->select('id','banner_name','banner_highlight','banner_desc','banner_slug','banner_image');
+        // $data2 = News::where('news_highlight', 1)->select('id','news_title','news_highlight','news_desc','news_slug','news_image');
+        // $banner = $data1->union($data2)->get();
         
-        $img = [];
-        foreach ($banner as $key => $item) {
+        // $img = [];
+        // foreach ($banner as $key => $item) {
+        //     # code...
+        //     if (File::exists(public_path("banner_image\\".$item->banner_image))) {
+        //         # code...
+        //         $img[] = '/banner_image/';
+        //     }else {
+        //         # code...
+        //         $img[] = '/news_image/';
+        //     }
+        // }
+
+        // $data = [];
+        // foreach ($banner as $key => $value) {
+        //     # code...
+        //     $data[] = [
+        //         'id'=>$value->id,
+        //         'banner_name'=>$value->banner_name,
+        //         'banner_slug'=>$value->banner_slug,
+        //         'banner_image'=>$value->banner_image,
+        //         'banner_desc'=>$value->banner_desc,
+        //         'banner_path'=>$img[$key],
+        //     ];
+        // }
+
+        $data1 = Banner::select('id','banner_name','banner_highlight','banner_desc','banner_slug','banner_image')->get()->toArray();
+        $x = null;
+        foreach ($data1 as $key => $value) {
             # code...
-            if (File::exists(public_path("banner_image\\".$item->banner_image))) {
-                # code...
-                $img[] = '/banner_image/';
-            }else {
-                # code...
-                $img[] = '/news_image/';
-            }
+            $x[]= array_merge($value,['path'=>'banner_image']);
         }
 
-        $data = [];
-        foreach ($banner as $key => $value) {
+        $collectionX = collect($x);
+
+        $data2 = News::select('id','news_title','news_highlight','news_desc','news_slug','news_image')->get()->toArray();
+        $y = null;
+        foreach ($data2 as $key => $value) {
             # code...
-            $data[] = [
-                'id'=>$value->id,
-                'banner_name'=>$value->banner_name,
-                'banner_slug'=>$value->banner_slug,
-                'banner_image'=>$value->banner_image,
-                'banner_desc'=>$value->banner_desc,
-                'banner_path'=>$img[$key],
-            ];
+            $y[]= array_merge($value,['path'=>'news_image']);
         }
+
+        $collectionY = collect($y);
+
+
+        // Menggabungkan kedua collection menjadi satu collection
+        $mergedCollection = $collectionX->merge($collectionY);
+        
+        // Tampilkan hasil collection yang digabungkan
+        $data = $mergedCollection;
 
         if ($data) {
             # code...
