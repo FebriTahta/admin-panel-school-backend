@@ -36,11 +36,11 @@ class ApiController extends Controller
 
     public function recent_news()
     {
-        $data = News::with('kategori')->orderBy('id','desc')->limit(3)->get();
+        $data = News::with('kategori')->orderBy('id','desc')->limit(4)->get();
         $datas= [];
         foreach ($data as $key => $value) {
             # code...
-            if ($key == "1" || $key == "2") {
+            if ($key == "1" || $key == "2" || $key == "3") {
                 # code...
                 $datas[] = $value;
             }
