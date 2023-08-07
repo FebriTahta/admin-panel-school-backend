@@ -507,7 +507,7 @@ class ApiController extends Controller
 
     public function display_arsip()
     {
-        $data = Arsip::whereHas('kategoribuku')->limit(3)->get();
+        $data = Arsip::whereHas('kategoribuku')->limit(2)->get();
         if ($data) {
             # code...
             return ApiFormatter::createApi(200, 'success' ,$data);
