@@ -507,7 +507,7 @@ class ApiController extends Controller
 
     public function display_arsip()
     {
-        $data = Arsip::whereHas('kategoribuku')->limit(2)->get();
+        $data = Arsip::whereHas('kategoribuku')->orderBy('id','desc')->limit(2)->get();
         if ($data) {
             # code...
             return ApiFormatter::createApi(200, 'success' ,$data);
@@ -519,7 +519,7 @@ class ApiController extends Controller
 
     public function daftar_arsip()
     {
-        $data = Arsip::whereHas('kategoribuku')->paginate(12);
+        $data = Arsip::whereHas('kategoribuku')->orderBy('id','desc')->paginate(12);
         if ($data) {
             # code...
             return ApiFormatter::createApi(200, 'success' ,$data);
@@ -532,7 +532,7 @@ class ApiController extends Controller
 
     public function daftar_kategoribuku()
     {
-        $data = Kategoribuku::whereHas('arsip')->withCount('arsip')->get();
+        $data = Kategoribuku::whereHas('arsip')->orderBy('id','desc')->withCount('arsip')->get();
         if ($data) {
             # code...
             return ApiFormatter::createApi(200, 'success' ,$data);
@@ -544,7 +544,7 @@ class ApiController extends Controller
 
     public function display_brosur()
     {
-        $data = Brosur::where('brosur_highlight', 1)->get();
+        $data = Brosur::where('brosur_highlight', 1)->orderBy('id','desc')->get();
         if ($data) {
             # code...
             return ApiFormatter::createApi(200, 'success' ,$data);
