@@ -141,71 +141,78 @@ class NewsController extends Controller
                 'message'  => $validator->messages().'',
             ]);
         }else {
-            if($request->hasFile('news_image')) {
-                if ($request->id !== null) {
-                    # code...
-                    $datas = News::find($request->id);
-                    $image_path1 = public_path("news_image\\".$datas->news_image);
-                    $image_path2 = public_path("image_news\\".$datas->news_image);
-                    if (File::exists($image_path1)) {
+
+            if ($request->kategori_id) {
+                # code...
+                if($request->hasFile('news_image')) {
+                    if ($request->id !== null) {
                         # code...
-                        unlink($image_path1);
+                        $datas = News::find($request->id);
+                        $image_path1 = public_path("news_image\\".$datas->news_image);
+                        $image_path2 = public_path("image_news\\".$datas->news_image);
+                        if (File::exists($image_path1)) {
+                            # code...
+                            unlink($image_path1);
+                        }
+    
+                        if (File::exists($image_path2)) {
+                            # code...
+                            unlink($image_path2);
+                        }
                     }
-
-                    if (File::exists($image_path2)) {
+    
+                    $filename    = time().'.'.$request->news_image->getClientOriginalExtension();
+                    $request->file('news_image')->move('news_image/',$filename);
+                    $thumbnail   = $filename;
+                    File::copy(public_path('news_image/'.$filename), public_path('image_news/'.$thumbnail));
+    
+                    $largethumbnailpath = public_path('news_image/'.$thumbnail);
+                    $this->createThumbnail($largethumbnailpath, 800, 800);
+    
+                    $data = News::updateOrCreate(
+                        [
+                            'id'=> $request->id,
+                        ],
+                        [
+                            'news_title'        => $request->news_title,
+                            'news_slug'         => Str::slug($request->news_title),
+                            'news_desc'         => $request->news_desc,
+                            'news_image'        => $filename,
+                            'news_view'         => 0,
+                        ]
+                    );
+    
+                    if (count($request->kategori_id) > 0) {
                         # code...
-                        unlink($image_path2);
+                        $kategori_id    = $request->kategori_id;
+                        $kategori       = Kategori::whereIn('id', $kategori_id)->get();
+                        $data->kategori()->sync($kategori);
+                    }
+    
+                }else{
+                    $data = News::updateOrCreate(
+                        [
+                            'id'=> $request->id,
+                        ],
+                        [
+                            'news_title'        => $request->news_title,
+                            'news_slug'         => Str::slug($request->news_title),
+                            'news_desc'         => $request->news_desc,
+                        ]
+                    );
+    
+                    if (count($request->kategori_id) > 0) {
+                        # code...
+                        $kategori_id    = $request->kategori_id;
+                        $kategori       = Kategori::whereIn('id', $kategori_id)->get();
+                        $data->kategori()->sync($kategori);
                     }
                 }
-
-                $filename    = time().'.'.$request->news_image->getClientOriginalExtension();
-                $request->file('news_image')->move('news_image/',$filename);
-                $thumbnail   = $filename;
-                File::copy(public_path('news_image/'.$filename), public_path('image_news/'.$thumbnail));
-
-                $largethumbnailpath = public_path('news_image/'.$thumbnail);
-                $this->createThumbnail($largethumbnailpath, 800, 800);
-
-                $data = News::updateOrCreate(
-                    [
-                        'id'=> $request->id,
-                    ],
-                    [
-                        'news_title'        => $request->news_title,
-                        'news_slug'         => Str::slug($request->news_title),
-                        'news_desc'         => $request->news_desc,
-                        'news_image'        => $filename,
-                        'news_view'         => 0,
-                    ]
-                );
-
-                if (count($request->kategori_id) > 0) {
-                    # code...
-                    $kategori_id    = $request->kategori_id;
-                    $kategori       = Kategori::whereIn('id', $kategori_id)->get();
-                    $data->kategori()->sync($kategori);
-                }
-
-            }else{
-                $data = News::updateOrCreate(
-                    [
-                        'id'=> $request->id,
-                    ],
-                    [
-                        'news_title'        => $request->news_title,
-                        'news_slug'         => Str::slug($request->news_title),
-                        'news_desc'         => $request->news_desc,
-                    ]
-                );
-
-                if (count($request->kategori_id) > 0) {
-                    # code...
-                    $kategori_id    = $request->kategori_id;
-                    $kategori       = Kategori::whereIn('id', $kategori_id)->get();
-                    $data->kategori()->sync($kategori);
-                }
+                return response()->json(['status'=>200,'message'=>'store success']);
+            }else {
+                # code...
+                return response()->json(['status'=>400,'message'=>'Kategori Harus Dipilih']);
             }
-            return response()->json(['status'=>200,'message'=>'store success']);
         }
     }
 
