@@ -13,6 +13,8 @@ use App\Http\Controllers\KesiswaanController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\InformasiPPDBController;
 use App\Http\Controllers\AlumniController;
+use App\Http\Controllers\ArsipController;
+use App\Http\Controllers\BrosurController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -143,6 +145,28 @@ Route::group(['middleware' => ['auth', 'CheckRole:admin,super_admin']], function
         Route::get('/admin-edit-alumni/{id}','edit_alumni');
         Route::get('/admin-set-alumni/{id}','set_alumni');
         Route::post('/remove-alumni','hapus_alumni');
+    });
+
+    Route::controller(ArsipController::class)->group(function(){
+        Route::get('/admin-arsip','admin_arsip');
+        Route::get('/admin-create-arsip','create_arsip');
+        Route::post('/admin-new-arsip','new_arsip');
+        Route::get('/admin-edit-arsip/{id}','edit_arsip');
+        Route::post('/admin-remove-arsip','remove_arsip');
+
+        Route::post('/admin-new-kategoribuku','new_kategoribuku');
+        Route::get('/admin-pilih-kategoribuku/{id}','pilih_kategoribuku');
+        Route::post('/admin-update-kategoribuku','update_kategoribuku');
+        Route::post('/admin-hapus-kategoribuku','hapus_kategoribuku');
+    });
+
+    Route::controller(BrosurController::class)->group(function(){
+        Route::get('/admin-brosur','admin_brosur');
+        Route::get('/admin-create-brosur','create_brosur');
+        Route::get('/admin-edit-brosur/{id}','edit_brosur');
+        Route::post('/admin-new-brosur','new_brosur');
+        Route::get('/admin-hapus-brosur','hapus_brosur');
+        Route::get('/set-brosur/{id}','set_brosur');
     });
 });
 

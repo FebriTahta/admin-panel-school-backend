@@ -28,10 +28,10 @@
             <div class="card-header pb-0">
               <div class="row">
                 <div class="col-lg-6 col-7">
-                  <h6>Berita</h6>
+                  <h6>Guru</h6>
                   <p class="text-sm mb-0">
                     <i class="fa fa-check text-info" aria-hidden="true"></i>
-                    <span class="font-weight-bold ms-1">---</span>  Buat Berita Baru
+                    <span class="font-weight-bold ms-1">---</span>  Daftarkan Guru Baru
                   </p>
                 </div>
               </div>

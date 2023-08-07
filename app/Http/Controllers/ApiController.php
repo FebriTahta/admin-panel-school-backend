@@ -9,6 +9,9 @@ use App\Models\Profile;
 use App\Models\Kesiswaan;
 use App\Models\Banner;
 use App\Models\Alumni;
+use App\Models\Arsip;
+use App\Models\Brosur;
+use App\Models\Kategoribuku;
 use File;
 use Image;
 use DB;
@@ -499,6 +502,55 @@ class ApiController extends Controller
                 );
             }
             return response()->json(['status'=>200,'message'=>'data alumni berhasil disimpan, menunggu persetujuan admin untuk menampilkan data'],200);
+        }
+    }
+
+    public function display_arsip()
+    {
+        $data = Arsip::whereHas('kategoribuku')->limit(3)->get();
+        if ($data) {
+            # code...
+            return ApiFormatter::createApi(200, 'success' ,$data);
+        }else {
+            # code...
+            return ApiFormatter::createApi(400, 'failed');
+        }
+    }
+
+    public function daftar_arsip()
+    {
+        $data = Arsip::whereHas('kategoribuku')->paginate(12);
+        if ($data) {
+            # code...
+            return ApiFormatter::createApi(200, 'success' ,$data);
+        }else {
+            # code...
+            return ApiFormatter::createApi(400, 'failed');
+        }
+
+    }
+
+    public function daftar_kategoribuku()
+    {
+        $data = Kategoribuku::whereHas('arsip')->withCount('arsip')->get();
+        if ($data) {
+            # code...
+            return ApiFormatter::createApi(200, 'success' ,$data);
+        }else {
+            # code...
+            return ApiFormatter::createApi(400, 'failed');
+        }
+    }
+
+    public function display_brosur()
+    {
+        $data = Brosur::where('brosur_highlight', 1)->get();
+        if ($data) {
+            # code...
+            return ApiFormatter::createApi(200, 'success' ,$data);
+        }else {
+            # code...
+            return ApiFormatter::createApi(400, 'failed');
         }
     }
 }
