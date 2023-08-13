@@ -11,6 +11,8 @@ use App\Models\Banner;
 use App\Models\Alumni;
 use App\Models\Arsip;
 use App\Models\Brosur;
+use App\Models\Floatmenu;
+use App\Models\Sosmed;
 use App\Models\Kategoribuku;
 use File;
 use Image;
@@ -568,5 +570,26 @@ class ApiController extends Controller
             # code...
             return ApiFormatter::createApi(400, 'failed');
         }
+    }
+
+    public function display_floatmenu()
+    {
+        $data1 = Floatmenu::orderBy('id','desc')->get();
+        $data2 = Sosmed::get();
+
+        return response()->json([
+            'status'=>200,
+            'message' =>'menampilkan float link & sosmed',
+            'datamenu'=> $data1,
+            'datasosmed'=> $data2
+        ]);
+        
+        // if ($data) {
+        //     # code...
+        //     return ApiFormatter::createApi(200, 'success' ,$data);
+        // }else {
+        //     # code...
+        //     return ApiFormatter::createApi(400, 'failed');
+        // }
     }
 }
