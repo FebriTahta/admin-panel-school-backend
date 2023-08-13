@@ -15,6 +15,8 @@ use App\Http\Controllers\InformasiPPDBController;
 use App\Http\Controllers\AlumniController;
 use App\Http\Controllers\ArsipController;
 use App\Http\Controllers\BrosurController;
+use App\Http\Controllers\FloatMenuController;
+
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -76,7 +78,7 @@ Route::group(['middleware' => ['auth', 'CheckRole:admin,super_admin']], function
         Route::get('/admin-edit-berita/{id}','edit_berita');
         Route::post('/remove-berita','remove_berita');
         // HIGHLIGHT
-        Route::get('/admin-set-banner/{id}/{tipe}','set_banner');
+        Route::get('/admin-set-banner/{id}','set_banner');
         // PRESTASI
         Route::get('/admin-prestasi','admin_prestasi');
         Route::get('/admin-create-prestasi','admin_create_prestasi');
@@ -167,6 +169,15 @@ Route::group(['middleware' => ['auth', 'CheckRole:admin,super_admin']], function
         Route::post('/admin-new-brosur','new_brosur');
         Route::get('/admin-hapus-brosur','hapus_brosur');
         Route::get('/set-brosur/{id}','set_brosur');
+    });
+
+    Route::controller(FloatMenuController::class)->group(function(){
+        Route::get('/admin-floatmenu','admin_floatmenu');
+        Route::get('/admin-create-floatmenu','create_floatmenu');
+        Route::post('/admin-new-floatmenu','new_floatmenu');
+        Route::post('/admin-remove-floatmenu','remove_floatmenu');
+        Route::get('/admin-edit-floatmenu/{id}','edit_floatmenu');
+        Route::post('/admin-update-sosmed','update_sosmed');
     });
 });
 

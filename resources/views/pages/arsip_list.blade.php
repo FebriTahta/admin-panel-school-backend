@@ -197,8 +197,6 @@
 
 @section('script')
 <script>
-
-    
     var tipe;
     function hapus(id,banner_name,tipe) {
         $('#delete_banner_id').val(id);

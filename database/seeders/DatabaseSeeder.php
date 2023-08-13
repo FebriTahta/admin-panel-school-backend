@@ -59,5 +59,23 @@ class DatabaseSeeder extends Seeder
             'paymentcontrol_server_key' => 'SB-Mid-server-T_UdN4X2THs48wx7R65Fj94k',
             'paymentcontrol_status' => 'aktif'
         ]);
+
+        \App\Models\Sosmed::firstOrCreate([
+            'sosmed_name' => 'facebook',
+            'sosmed_icon' => 'fab fa-facebook',
+            'sosmed_link' => 'https://facebook.com',
+        ]);
+
+        \App\Models\Sosmed::firstOrCreate([
+            'sosmed_name' => 'tiktok',
+            'sosmed_icon' => 'fab fa-tiktok',
+            'sosmed_link' => 'https://tiktok.com',
+        ]);
+
+        \App\Models\Sosmed::firstOrCreate([
+            'sosmed_name' => 'instagram',
+            'sosmed_icon' => 'fab fa-instagram',
+            'sosmed_link' => 'https://instagram.com',
+        ]);
     }
 }

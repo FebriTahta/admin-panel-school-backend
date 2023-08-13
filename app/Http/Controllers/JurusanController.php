@@ -37,7 +37,6 @@ class JurusanController extends Controller
             'jurusan_desc'  => 'required|',
             'jurusan_anak'  => 'required|',
             'jurusan_kelas'  => 'required|',
-            // 'news_image'    => 'required|',
         ]);
 
         if ($validator->fails()) {

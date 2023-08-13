@@ -12,35 +12,38 @@ class BannerController extends Controller
 {
     public function admin_banner()
     {
-        $data1 = Banner::select('id','banner_name','banner_highlight','banner_desc','banner_slug','banner_image')->get()->toArray();
-        $x = null;
-        foreach ($data1 as $key => $value) {
-            # code...
-            $x[]= array_merge($value,['path'=>'banner_image']);
-        }
+        // $data1 = Banner::select('id','banner_name','banner_highlight','banner_desc','banner_slug','banner_image')->get()->toArray();
+        // $x = null;
+        // foreach ($data1 as $key => $value) {
+        //     # code...
+        //     $x[]= array_merge($value,['path'=>'banner_image']);
+        // }
 
-        $collectionX = collect($x);
+        // $collectionX = collect($x);
 
-        $data2 = News::select('id','news_title','news_highlight','news_desc','news_slug','news_image')->get()->toArray();
-        $y = null;
-        foreach ($data2 as $key => $value) {
-            # code...
-            $y[]= array_merge($value,['path'=>'news_image']);
-        }
+        // $data2 = News::select('id','news_title','news_highlight','news_desc','news_slug','news_image')->get()->toArray();
+        // $y = null;
+        // foreach ($data2 as $key => $value) {
+        //     # code...
+        //     $y[]= array_merge($value,['path'=>'news_image']);
+        // }
 
-        $collectionY = collect($y);
+        // $collectionY = collect($y);
 
 
-        // Menggabungkan kedua collection menjadi satu collection
-        $mergedCollection = $collectionX->merge($collectionY);
+        // // Menggabungkan kedua collection menjadi satu collection
+        // $mergedCollection = $collectionX->merge($collectionY);
         
-        // Tampilkan hasil collection yang digabungkan
-        $banner = $mergedCollection->all();
-
+        // // Tampilkan hasil collection yang digabungkan
+        // $banner = $mergedCollection->all();
+        
+        // Versi query union
         // $datax = Banner::select('id','banner_name','banner_highlight','banner_desc','banner_slug','banner_image');
         // $datay = News::select('id','news_title','news_highlight','news_desc','news_slug','news_image');
         // $banner2 = $datax->union($datay)->get();
 
+
+        $banner = Banner::orderBy('id', 'DESC')->paginate(10);
         return view('pages.banner_list',compact('banner'));
 
     }

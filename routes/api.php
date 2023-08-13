@@ -22,6 +22,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::controller(ApiController::class)->group(function(){
     // home
     Route::get('hot-news','hot_news'); //ok
+    Route::get('latest-news','latest_news'); //ok
     Route::get('recent-news','recent_news'); //ok
     Route::get('preview-jurusan','preview_jurusan'); //ok
     Route::get('preview-guru','preview_guru'); //ok

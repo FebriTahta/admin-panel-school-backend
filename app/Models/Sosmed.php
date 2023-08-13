@@ -5,13 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Floatmenu extends Model
+class Sosmed extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'floatmenus_name',
-        'floatmenus_link',
-        'floatmenus_icon'
+        'sosmed_name',
+        'sosmed_icon',
+        'sosmed_link'
     ];
 }
