@@ -58,4 +58,6 @@ Route::controller(ApiController::class)->group(function(){
     Route::get('display-brosur','display_brosur'); //ok
 
     Route::post('new-alumni','add_alumni_and_ulasan');
+
+    Route::get('global-search','global_search');
 });

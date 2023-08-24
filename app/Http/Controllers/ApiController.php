@@ -592,4 +592,22 @@ class ApiController extends Controller
         //     return ApiFormatter::createApi(400, 'failed');
         // }
     }
+
+    public function global_search(Request $request)
+    {
+        $query   = $request->input('query');
+
+        $result1 = News::where('news_title', 'LIKE', '%' . $query . '%')
+                    ->get();
+        $result2 = Kesiswaan::where('kesiswaan_title', 'LIKE', '%' . $query . '%')
+                    ->get();
+    
+        return response()->json([
+            'status'    => 200,
+            'message'   => 'menampilkan float link & sosmed',
+            'result1'   => $result1,
+            'result2'   => $result2,
+            'search'    => $query,
+        ]);
+    }
 }
