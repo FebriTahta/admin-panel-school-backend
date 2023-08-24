@@ -17,6 +17,7 @@ use App\Models\Kategoribuku;
 use File;
 use Image;
 use DB;
+use Illuminate\Support\Str;
 use Validator;
 use App\Helpers\ApiFormatter;
 use App\Models\Infoppdb;
@@ -595,6 +596,8 @@ class ApiController extends Controller
 
     public function global_search($query)
     {
+        $query   = Str::slug($query);
+
         $result1 = News::where('news_title', 'LIKE', '%' . $query . '%')
         ->with('kategori')->paginate(10);
         $result2 = Kesiswaan::where('kesiswaan_title', 'LIKE', '%' . $query . '%')
