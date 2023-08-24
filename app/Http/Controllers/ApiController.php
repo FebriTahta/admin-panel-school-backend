@@ -596,9 +596,9 @@ class ApiController extends Controller
     public function global_search($query)
     {
         $result1 = News::where('news_title', 'LIKE', '%' . $query . '%')
-                    ->get();
+        ->with('kategori')->paginate(10);
         $result2 = Kesiswaan::where('kesiswaan_title', 'LIKE', '%' . $query . '%')
-                    ->get();
+        ->with('kategori')->paginate(10);
     
         return response()->json([
             'status'    => 200,
