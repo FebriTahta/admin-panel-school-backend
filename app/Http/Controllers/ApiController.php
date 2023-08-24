@@ -593,10 +593,8 @@ class ApiController extends Controller
         // }
     }
 
-    public function global_search(Request $request)
+    public function global_search($query)
     {
-        $query   = $request->input('query');
-
         $result1 = News::where('news_title', 'LIKE', '%' . $query . '%')
                     ->get();
         $result2 = Kesiswaan::where('kesiswaan_title', 'LIKE', '%' . $query . '%')

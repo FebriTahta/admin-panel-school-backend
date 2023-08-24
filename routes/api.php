@@ -59,5 +59,5 @@ Route::controller(ApiController::class)->group(function(){
 
     Route::post('new-alumni','add_alumni_and_ulasan');
 
-    Route::get('global-search','global_search');
+    Route::get('global-search/{search}','global_search');
 });
