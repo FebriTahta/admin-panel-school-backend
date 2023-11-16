@@ -123,7 +123,7 @@ class ApiController extends Controller
     public function daftar_berita()
     {
         $data = News::orderBy('id','desc')->whereHas('kategori',function($query){
-            $query->where('kategori_slug','!=','prestasi')->where('kategori_slug','!=','program-unggulan');
+            $query->whereNotIn('kategori_slug', ['prestasi', 'program-unggulan']);
         })->with('kategori')->paginate(10);
         if ($data) {
             # code...
