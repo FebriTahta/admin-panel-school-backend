@@ -122,9 +122,7 @@ class ApiController extends Controller
 
     public function daftar_berita()
     {
-        $data = News::orderBy('id','desc')->whereHas('kategori',function($query){
-            $query->whereNotIn('kategori_slug', ['prestasi', 'program-unggulan']);
-        })->with('kategori')->limit(10);
+        $data = News::orderBy('id','desc')->whereHas('kategori')->limit(10);
         if ($data) {
             # code...
             return ApiFormatter::createApi(200, 'success' ,$data);
