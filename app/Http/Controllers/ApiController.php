@@ -124,7 +124,7 @@ class ApiController extends Controller
     {
         $data = News::orderBy('id','desc')->whereHas('kategori',function($query){
             $query->whereNotIn('kategori_slug', ['prestasi', 'program-unggulan']);
-        })->paginate(6);
+        })->with('kategori')->limit(10);
         if ($data) {
             # code...
             return ApiFormatter::createApi(200, 'success' ,$data);
